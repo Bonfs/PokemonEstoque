@@ -5,10 +5,16 @@
  */
 package vendas;
 
+import treinadoresEtratadores.Pokemon;
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  *
  * @author matheus
  */
 public class Venda {
-    
+    private Date dataDeVenda;
+    private int codTreinador, codTratador;
+    ArrayList<Pokemon> pokemonArray;
 }
