@@ -57,7 +57,9 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
+        view.forward(request, response);
     }
 
     /**
@@ -71,9 +73,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        String login = request.getParameter("login");
-        request.setAttribute("login", login);
+        
         RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
         view.forward(request, response);
     }
