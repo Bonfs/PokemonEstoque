@@ -15,6 +15,10 @@ import java.util.Date;
  */
 public class Venda {
     private Date dataDeVenda;
-    private int codTreinador, codTratador;
-    ArrayList<Pokemon> pokemonArray;
+    private int codTreinador;
+    ArrayList<VendaProduto> vendaProduto;
+    
+    public Venda(){
+        this.vendaProduto = new ArrayList();
+    }
 }

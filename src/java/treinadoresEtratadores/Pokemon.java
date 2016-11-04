@@ -11,8 +11,17 @@ package treinadoresEtratadores;
  * @author matheus
  */
 public class Pokemon {
+    private int ID;
     private String tipo;
     private String description, nome, imgPath;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public String getTipo() {
         return tipo;
