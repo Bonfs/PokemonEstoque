@@ -21,6 +21,7 @@ public class VendaProduto {
     public VendaProduto(Pokemon poke, int quantidade){
         this.poke = poke;
         this.quantidade = quantidade;
+        this.pokemon_ID = poke.getID();
     }
 
     public Pokemon getPoke() {
