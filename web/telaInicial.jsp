@@ -14,7 +14,19 @@
     </head>
     <body>
         <% 
-            String login = request.getParameter("login");
+            //= request.getParameter("login")
+            String login = "seu Hacker!!";
+            Cookie[] cookies = request.getCookies();
+            if(cookies != null){
+                for(Cookie cookie : cookies){
+                    if(cookie.getName().equals("login"))
+                        login = cookie.getValue();
+                }
+                
+            }
+            else{
+                response.sendRedirect("index.jsp");
+            }
         %>
         <h1>Hello <%=login%>!</h1>
     </body>

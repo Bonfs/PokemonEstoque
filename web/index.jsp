@@ -14,13 +14,15 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
     </head>
     <body>
-    <style type="text/css">
     </style>
         <div>
         	<form method="post"
-        		  action="/LoginServlet">
-        		<label for="login">Login: </label><input type="text" name="login">
-        		<label for="password">Senha: </label><input type="password" name="password">
+        		  action="${pageContext.request.contextPath}/LoginServlet">
+        		<label for="login">Login:sss </label><input type="text" name="login">
+        		<label for="password">Senha: </label><input type="password" name="password">    
+                <div>
+                    <a href="">Não possui conta? Cadastre-se.</a>
+                </div>                   
         		<div>
         			<input type="submit" name="logar" value="Logar">
         		</div>
