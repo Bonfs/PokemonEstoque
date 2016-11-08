@@ -23,11 +23,11 @@
         <div id="head" class="loja_div">
         <h1>PokeStore</h1>
         <div id="Menu">
-            <a class="button" href="Loja.jsp">Tudo</a>
-            <a class="button" href="Loja.jsp">Ovos</a>
-            <a class="button" href="Loja.jsp">Pokemons</a>
-            <a class="button" href="Loja.jsp">Pokebolas</a>
-            <a class="button" href="Loja.jsp">Consumiveis</a>
+            <a class="button" href="#">Tudo</a>
+            <a class="button" href="#">Ovos</a>
+            <a class="button" href="#">Pokemons</a>
+            <a class="button" href="#">Pokebolas</a>
+            <a class="button" href="#">Consumiveis</a>
         </div>
         </div>
         <div id="body" class="loja_div">

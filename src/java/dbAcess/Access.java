@@ -18,7 +18,7 @@ public class Access {
             e.printStackTrace();
             } 
             
-            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aluno\\Desktop\\Web\\Repo\\pokeBD.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aluno\\Desktop\\Repo\\pokeBD.db");
             statement = connection.createStatement();
             rs = statement.executeQuery(Select);
             int length = rs.getMetaData().getColumnCount();

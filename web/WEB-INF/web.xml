@@ -15,7 +15,6 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
-<<<<<<< HEAD
     <servlet>
         <servlet-name>DefaultServlet</servlet-name>
         <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
@@ -26,13 +25,10 @@
         <url-pattern>*.jpg</url-pattern>
         <url-pattern>*.jpeg</url-pattern>
     </servlet-mapping>
-    
-=======
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
     </servlet-mapping>
->>>>>>> a38db8ec61fe6257b30d890227bcc36f70b773d1
     <session-config>
         <session-timeout>
             30
