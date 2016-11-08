@@ -18,7 +18,7 @@
     </style>
         <div>
         	<form method="post"
-        		  action="/LoginServlet">
+        		  action="LoginServlet">
         		<label for="login">Login: </label><input type="text" name="login">
         		<label for="password">Senha: </label><input type="password" name="password">
         		<div>
