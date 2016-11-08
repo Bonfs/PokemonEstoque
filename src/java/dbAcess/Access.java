@@ -5,7 +5,7 @@ import java.util.List;
 import java.sql.*;
 
 public class Access {
-    public List SelectSQL(String Select) throws SQLException,InstantiationException, IllegalAccessException {
+    public StringBuilder SelectSQL(String Select) throws SQLException,InstantiationException, IllegalAccessException {
             Connection connection = null;
             Statement statement = null;
             ResultSet rs = null;
@@ -46,7 +46,7 @@ public class Access {
             rs.close();
             statement.close();
             connection.close();
-         return novo;
+         return sqlStringToVector(novo);
         }
     
     public StringBuilder sqlStringToVector(List<String> Lista){
