@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/treinadoresEtratadores/Usuario.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/vendas/Estoque.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/servlets/LoginServlet.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/treinadoresEtratadores/Treinador.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/vendas/VendaProduto.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/vendas/Venda.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/treinadoresEtratadores/Pokemon.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/treinadoresEtratadores/Tratador.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
