@@ -17,12 +17,18 @@
     </style>
         <div>
         	<form method="post"
+<<<<<<< HEAD
         		  action="${pageContext.request.contextPath}/LoginServlet">
         		<label for="login">Login:sss </label><input type="text" name="login">
         		<label for="password">Senha: </label><input type="password" name="password">    
                 <div>
                     <a href="">Não possui conta? Cadastre-se.</a>
                 </div>                   
+=======
+        		  action="LoginServlet">
+        		<label for="login">Login: </label><input type="text" name="login">
+        		<label for="password">Senha: </label><input type="password" name="password">
+>>>>>>> 28e524838b6da228dfb74bffba8ab67b6f63f67d
         		<div>
         			<input type="submit" name="logar" value="Logar">
         		</div>
