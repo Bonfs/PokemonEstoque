@@ -31,7 +31,34 @@
         </div>
         </div>
         <div id="body" class="loja_div">
+            <div id="0"></div>
+            <div id="1"></div>
             <%=SelectVet%>
         </div>
+        <script>
+            var path;
+            function loadImagem( id,img )
+            {
+                carregar = new Image();
+                carregar.src = img ;
+                path = document.getElementById("body").getElementsByTagName("div")[id];
+                //document.getElementById("body").innerHTML = "Carregando...";
+                path.innerHTML = "Carregando...";
+                setTimeout( "verificaCarregamento()", 1 );
+            }
+
+            function verificaCarregamento()
+            {
+                if( carregar.complete )
+                {
+                    path.innerHTML = "<img src=\"" + carregar.src + "\"width=300 />";
+                }
+                else
+                {
+                    setTimeout( "verificaCarregamento()", 1 );
+                }
+            }
+            loadImagem("0","./img/0_0.jpg");
+        </script>    
     </body>
 </html>
