@@ -29,7 +29,11 @@ h1{
 
 #container2{ background-image: url('../img/PokeCenter_BG_2.jpg'); }
 
-#container3{ background-size: 3%; background-image: url('../img/PokeCenter_BG_3.jpg'); }
+#container3{ 
+	//background-size: 3%; 
+	//background-image: url('../img/PokeCenter_BG_3.jpg');
+	background-color: #f00;  
+}
 
 #conteudo{
 	position: relative;
@@ -186,7 +190,7 @@ footer{
 	background-color:#fff;
 	border:solid 2px #e2e2e2;
 	border-radius:50px;
-	margin-left: calc(100% - 300px);
+	margin-left: calc(100% - 324px);
 	margin-top: 20px;
 }
 #lupa{
@@ -200,4 +204,20 @@ footer{
 	font-size: 0.9em;;
 	border:none;
 	text-align: left;
+}
+
+.produto{
+	width: 22%;
+	padding: 10px 4px 15px;
+	float: left;
+	border-radius: 5px;
+	box-shadow: 5px 5px 6px rgba(0,0,0,.4);
+	background-color: #ffffff;
+	margin: 20px 10px 0px;
+}
+
+.produto div p{
+	color: #444;
+	text-align: center;
+	font-size: 1.2rem;
 }
