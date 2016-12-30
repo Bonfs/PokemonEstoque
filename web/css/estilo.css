@@ -30,9 +30,9 @@ h1{
 #container2{ background-image: url('../img/PokeCenter_BG_2.jpg'); }
 
 #container3{ 
-	//background-size: 3%; 
-	//background-image: url('../img/PokeCenter_BG_3.jpg');
-	background-color: #f00;  
+	background-size: 3%; 
+	background-image: url('../img/PokeCenter_BG_3.jpg');
+	//background-color: #f00;  
 }
 
 #conteudo{
@@ -211,7 +211,7 @@ footer{
 	padding: 10px 4px 15px;
 	float: left;
 	border-radius: 5px;
-	box-shadow: 5px 5px 6px rgba(0,0,0,.4);
+	box-shadow: 5px 5px 4px rgba(0,0,0,.1);
 	background-color: #ffffff;
 	margin: 20px 10px 0px;
 }
