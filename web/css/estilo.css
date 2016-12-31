@@ -33,6 +33,7 @@ h1{
 	background-size: 3%; 
 	background-image: url('../img/PokeCenter_BG_3.jpg');
 	//background-color: #f00;  
+	color: #6f6f6f;
 }
 
 #conteudo{
@@ -158,19 +159,20 @@ footer{
 	font-size: 1em;
 }
 
-#footer2{ 
+#footer2, #footer_2{ 
 	width:50%; 
 	float: left;
 	padding: 20px 0px;
 	font-size: 1em; 
 }
 
-#footer2 li{ 
+#footer2 li, #footer_2 li{ 
 	display: inline-block;
 	margin-right: 30px; 
 }
 
 #footer2 li a{ color:#ffffff;}
+#footer_2 li a{ color:#6f6f6f;}
 
 #cadastro{
 	height: 320px;
@@ -217,7 +219,32 @@ footer{
 }
 
 .produto div p{
-	color: #444;
+	color: #6f6f6f;
 	text-align: center;
 	font-size: 1.2rem;
+}
+
+#produtoDescri{
+	width: calc(100% - 60px);
+	padding: 30px;
+	background-color: #fff;
+	height: 360px;
+	border-radius: 15px;
+	margin-top: 20px;
+	box-shadow: 5px 5px 4px rgba(0,0,0,.1);
+}
+
+#coluna1{float: left; width: 36%; margin-left: 4%; //background-color: red;}
+
+#coluna2{float: left; width: 48%; margin-left: 8%; //background-color: green;}
+
+.bg-produto{
+border-radius: 60px;
+padding: 5px;
+background-image: linear-gradient(to right, #2482ea 0%, #14eaa9 100%);
+}
+
+.img-produto{
+border-radius: 60px;
+background-color: #ffffff;	
 }
