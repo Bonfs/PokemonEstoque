@@ -228,7 +228,7 @@ footer{
 	width: calc(100% - 60px);
 	padding: 30px;
 	background-color: #fff;
-	height: 360px;
+	min-height: 360px;
 	border-radius: 15px;
 	margin-top: 20px;
 	box-shadow: 5px 5px 4px rgba(0,0,0,.1);
@@ -247,4 +247,28 @@ background-image: linear-gradient(to right, #2482ea 0%, #14eaa9 100%);
 .img-produto{
 border-radius: 60px;
 background-color: #ffffff;	
+}
+
+.botao_null{
+	position: relative;
+	padding: 10px 22px;
+	background-image: linear-gradient(to right, #2482ea, #14eaa9);
+	color:#ffffff;
+	font-size: 0.9em;
+	text-align:center;
+	border-radius:50px;
+	box-shadow:4px 4px 1px rgba(0,0,0,.2);
+	margin-bottom:15px;
+	margin-left: calc(50% - 110px);
+	cursor: pointer;
+}
+
+input[name="quantidade"]{
+	width: 16%;
+	color: #6f6f6f;
+	text-align: center;
+	padding: 0px 5px;
+	margin: 4% 0px;
+	border:solid 2px #e2e2e2;
+	border-radius: 20px;
 }
