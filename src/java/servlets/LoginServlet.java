@@ -5,8 +5,13 @@
  */
 package servlets;
 
+import dbAcess.Access;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -75,10 +80,28 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String login = request.getParameter("login");
-        Cookie loginCookie = new Cookie("login", login);
-        RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
-        response.addCookie(loginCookie);
-        view.forward(request, response);
+        String pswd = request.getParameter("senha");
+        StringBuilder rs;
+        
+        Access db = new Access();
+        try {
+            String query = "SELECT * FROM usuario WHERE login =" + login + " AND senha =" + pswd;
+            rs = db.SelectSQL(query);
+            login = Integer.toString(rs.length());
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            Cookie loginCookie = new Cookie("login", login);
+            Cookie senhaCookie = new Cookie("pswd", pswd);
+            response.addCookie(loginCookie);
+            RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
+            view.forward(request, response);
+        }
     }
 
     /**

@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
-		<title>Início</title>
+		<title>Iníciod</title>
 	</head>
 	<body>
 		<div id="container1">			
 			<div id="conteudo">
-				<div id="logo"><a href="home.html"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
+				<div id="logo"><a href="home.jsp"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
 				<div id="linkloja_login">						
 					<div id ="linkLoja">
 						<div>
@@ -17,10 +17,10 @@
 						<p><a href="#"> ACESSE NOSSA LOJA </a></p>
 					</div>
 					<div id="login">
-						<form action="" method="post">
+						<form action="LoginServlet" method="post">
 							<div class="legenda">LOGIN:</div>
 							<input type="text" name="login"><br>
-							
+
 							<div class="legenda">SENHA:</div>
 							<input type="password" name="senha"><br>
 							

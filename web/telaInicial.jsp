@@ -4,6 +4,7 @@
     Author     : matheus
 --%>
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,18 +15,18 @@
     </head>
     <body>
         <% 
-            //= request.getParameter("login")
-            String login = "seu Hacker!!";
+            String login = "nhammm";
             Cookie[] cookies = request.getCookies();
             if(cookies != null){
-                for(Cookie cookie : cookies){
+               // String query = "SELECT * FROM usuario WHERE login =" + login + " AND senha =" + pswd;
+               for(Cookie cookie : cookies){
                     if(cookie.getName().equals("login"))
                         login = cookie.getValue();
-                }
+                } 
                 
             }
             else{
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("home.jsp");
             }
         %>
         <h1>Hello <%=login%>!</h1>

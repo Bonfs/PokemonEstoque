@@ -18,7 +18,11 @@ public class Access {
             e.printStackTrace();
             } 
             
-            connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aluno\\Desktop\\Repo\\pokeBD.db");
+            ///home/matheus/NetBeansProjects/PokemonEstoque
+            //connection = DriverManager.getConnection("jdbc:sqlite:pokeBD.db");
+            
+            connection = DriverManager.getConnection("jdbc:sqlite:/home/matheus/NetBeansProjects/PokemonEstoque/pokeBD.db");
+            //connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aluno\\Desktop\\Repo\\pokeBD.db");
             statement = connection.createStatement();
             rs = statement.executeQuery(Select);
             int length = rs.getMetaData().getColumnCount();
@@ -47,6 +51,39 @@ public class Access {
             statement.close();
             connection.close();
          return sqlStringToVector(novo);
+        }
+    
+    /**
+     *
+     * @param Select
+     * @return
+     * @throws SQLException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     */
+    public ResultSet selectSQL(String Select) throws SQLException,InstantiationException, IllegalAccessException {
+            Connection connection = null;
+            Statement statement = null;
+            ResultSet rs = null;
+            List novo = new ArrayList();
+            try{
+            Class.forName("org.sqlite.JDBC").newInstance();
+            } catch (ClassNotFoundException e) {
+            //Cannot register postgresql MySQL driver
+            System.out.println("This is something you have not add in sqlite library to classpath!");
+            e.printStackTrace();
+            } 
+            
+            ///home/matheus/NetBeansProjects/PokemonEstoque
+            //connection = DriverManager.getConnection("jdbc:sqlite:pokeBD.db");
+            
+            connection = DriverManager.getConnection("jdbc:sqlite:/home/matheus/NetBeansProjects/PokemonEstoque/pokeBD.db");
+            //connection = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\aluno\\Desktop\\Repo\\pokeBD.db");
+            statement = connection.createStatement();
+            rs = statement.executeQuery(Select);
+            int length = rs.getMetaData().getColumnCount();
+            
+         return rs;
         }
     
     public StringBuilder sqlStringToVector(List<String> Lista){
