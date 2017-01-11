@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/build/web/home.jsp</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/dbAcess/Access.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/src/java/servlets/LoginServlet.java</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/web/telaInicial.jsp</file>
-            <file>file:/home/matheus/NetBeansProjects/PokemonEstoque/web/loja.jsp</file>
+            <file>file:/E:/Doc/Desktop/Projects/PKMN/src/java/dbAccess/Access.java</file>
+            <file>file:/E:/Doc/Desktop/Projects/PKMN/web/loja.jsp</file>
+            <file>file:/E:/Doc/Desktop/Projects/PKMN/src/java/servlets/LoginServlet.java</file>
         </group>
     </open-files>
 </project-private>

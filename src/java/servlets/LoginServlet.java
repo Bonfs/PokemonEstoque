@@ -5,7 +5,7 @@
  */
 package servlets;
 
-import dbAcess.Access;
+import dbAccess.Access;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
         Access db = new Access();
         try {
             String query = "SELECT * FROM usuario WHERE login =" + login + " AND senha =" + pswd;
-            rs = db.SelectSQL(query);
+            rs = db.SelectSQL(query,0);
             login = Integer.toString(rs.length());
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);

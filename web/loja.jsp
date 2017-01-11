@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="dbAcess.Access"%>
+<%@page import="dbAccess.Access"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +13,7 @@
         <title>Poke Store</title>
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
         <% Access db = new Access();
-        StringBuilder SelectVet = db.SelectSQL(new String("SELECT * FROM produto")); %>
+        StringBuilder SelectVet = db.SelectSQL(new String("SELECT * FROM produto"),0); %>
     </head>
     <body>
         <div id="head" class="loja_div">
