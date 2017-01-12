@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
-		<title>InÃ­ciod</title>
+		<title>Início</title>
 	</head>
 	<body>
 		<div id="container1">			

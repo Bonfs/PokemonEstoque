@@ -82,15 +82,16 @@ public class LoginServlet extends HttpServlet {
         String login = request.getParameter("login");
         String pswd = request.getParameter("senha");
         String Resultado="";
-        StringBuilder rs ;
+        ResultSet rs;
         
+        
+        //Acessando o Banco de Dados
         Access db = new Access();
         try {
-            String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";
-            rs = db.SelectSQL(query,0);
-            login = Integer.toString(rs.length());
-           // Resultado=rs.toString();
-           Resultado = query;
+            String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";//problema de acentuação
+            rs = db.selectSQL(query);
+            login = rs.getString("email");
+            Resultado = query;
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -100,12 +101,14 @@ public class LoginServlet extends HttpServlet {
         } finally{
             Cookie loginCookie = new Cookie("login", login);
             Cookie respCookie = new Cookie("Resp", Resultado);
-            
+
             RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
             response.addCookie(loginCookie);
             response.addCookie(respCookie);
-            view.forward(request, response);
-           //processRequest(request, response);
+            //view.forward(request, response);
+            response.sendRedirect("telaInicial.jsp");
+            //processRequest(request, response);
+            db.connectionClose();
         }
     }
 
