@@ -81,26 +81,31 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String login = request.getParameter("login");
         String pswd = request.getParameter("senha");
-        StringBuilder rs;
+        String Resultado="";
+        StringBuilder rs ;
         
         Access db = new Access();
         try {
-            String query = "SELECT * FROM usuario WHERE login =" + login + " AND senha =" + pswd;
+            String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";
             rs = db.SelectSQL(query,0);
             login = Integer.toString(rs.length());
+           // Resultado=rs.toString();
+           Resultado = query;
         } catch (SQLException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
+        } finally{
             Cookie loginCookie = new Cookie("login", login);
-            Cookie senhaCookie = new Cookie("pswd", pswd);
-            response.addCookie(loginCookie);
+            Cookie respCookie = new Cookie("Resp", Resultado);
+            
             RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
+            response.addCookie(loginCookie);
+            response.addCookie(respCookie);
             view.forward(request, response);
+           //processRequest(request, response);
         }
     }
 
@@ -113,5 +118,9 @@ public class LoginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void alert(String operação_enviada_ao_servidor_) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
