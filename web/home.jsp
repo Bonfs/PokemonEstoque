@@ -1,3 +1,4 @@
+<%@page import="java.util.Hashtable"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -6,6 +7,19 @@
 		<title>Início</title>
 	</head>
 	<body>
+            <%
+                Cookie[] cookies = request.getCookies();
+                if(cookies != null){
+                   Hashtable<String, String> tabelaCookie = new Hashtable<String, String>();
+                   for(Cookie cookie : cookies){
+                       tabelaCookie.put(cookie.getName(), cookie.getValue());                   
+                    }
+
+                   if(Boolean.valueOf(tabelaCookie.get("isLogged"))){
+                       response.sendRedirect("telaInicial.jsp");
+                   }
+                }
+            %>
 		<div id="container1">			
 			<div id="conteudo">
 				<div id="logo"><a href="home.jsp"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>

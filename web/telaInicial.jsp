@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="java.util.Hashtable"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,18 +18,23 @@
         <% 
             String login = "nhammm";
             Cookie[] cookies = request.getCookies();
+            Hashtable<String, String> tabelaCookie = new Hashtable<String, String>();
             if(cookies != null){
-               // String query = "SELECT * FROM usuario WHERE login =" + login + " AND senha =" + pswd;
                for(Cookie cookie : cookies){
-                    if(cookie.getName().equals("login"))
-                        login = cookie.getValue();
-                } 
-                
+                   tabelaCookie.put(cookie.getName(), cookie.getValue());                   
+                }
+               
+               if(Boolean.valueOf(tabelaCookie.get("isLogged"))){
+                   login = tabelaCookie.get("login");
+               }
+               else{
+                   response.sendRedirect("loja.jsp");
+               }
             }
             else{
                 response.sendRedirect("home.jsp");
             }
         %>
-        <h1>Hello <%=login%>!</h1>
+        <h1>Olá <%=login%>!</h1>
     </body>
 </html>

@@ -1,5 +1,6 @@
 package dbAccess;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -11,9 +12,11 @@ public class Access {
     private Statement statement = null;
     
     public Access(){
+        URL url = getClass().getResource("pokeBD.db");
+        String urls = url.toString();
         try {
             Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection("jdbc:sqlite:/home/matheus/NetBeansProjects/PokemonEstoque/pokeBD.db");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:"+urls);
             this.statement = connection.createStatement();
         } catch (SQLException ex) {
             Logger.getLogger(Access.class.getName()).log(Level.SEVERE, null, ex);
