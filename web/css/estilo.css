@@ -13,6 +13,9 @@ h1{
 	padding: 10px 0px 20px;
 	font-family: ABeeZee-Regular, Calibri, San Serif;
 }
+a{
+	color:#6f6f6f;
+}
 
 #container1,#container2,#container3{
 	position: absolute;
@@ -31,6 +34,8 @@ h1{
 
 #container3{ 
 	background-size: 3%; 
+	background-image: url('../img/PokeCenter_BG_3.jpg');
+	//background-color: #f00;  
 	color: #6f6f6f;
 }
 
@@ -232,18 +237,18 @@ footer{
 	box-shadow: 5px 5px 4px rgba(0,0,0,.1);
 }
 
-#coluna1{float: left; width: 36%; margin-left: 4%; }
+#coluna1{float: left; width: 36%; margin-left: 4%; //background-color: red;}
 
-#coluna2{float: left; width: 48%; margin-left: 8%; }
+#coluna2{float: left; width: 48%; margin-left: 8%; //background-color: green;}
 
 .bg-produto{
-border-radius: 60px;
+border-radius: 10%;
 padding: 5px;
 background-image: linear-gradient(to right, #2482ea 0%, #14eaa9 100%);
 }
 
 .img-produto{
-border-radius: 60px;
+border-radius: 9%;
 background-color: #ffffff;	
 }
 
@@ -269,4 +274,20 @@ input[name="quantidade"]{
 	margin: 4% 0px;
 	border:solid 2px #e2e2e2;
 	border-radius: 20px;
+}
+
+.elemento_carrinho{
+	width: 100%;
+	height: 160px;
+	padding: 20px 0px 10px;
+	border-bottom: 1px solid #c3c3c3;
+}
+
+.col1_elemento_carrinho{ float: left; width: 16%;}
+.col2_elemento_carrinho{ float: left; width: calc(64% - 60px);margin:0px 30px;}
+.col3_elemento_carrinho{ float: left; width: 20%;}
+.col2_elemento_carrinho li{display: inline-block; margin-right: 20px;}
+.icon_lixeira{ float: left; width: 20px;}
+.col3_elemento_carrinho div{
+	margin-top: 30px;
 }
