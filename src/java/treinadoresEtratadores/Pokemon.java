@@ -12,15 +12,23 @@ package treinadoresEtratadores;
  */
 public class Pokemon {
     private int ID;
-    private String tipo;
-    private String description, nome, imgPath;
-
+    private float preco;
+    private String tipo,description, nome, imgPath;
+    
     public int getID() {
         return ID;
     }
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+    
+    public float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(float preco) {
+        this.preco = preco;
     }
 
     public String getTipo() {

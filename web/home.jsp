@@ -14,7 +14,7 @@
                    for(Cookie cookie : cookies){
                        tabelaCookie.put(cookie.getName(), cookie.getValue());                   
                     }
-
+                   
                    if(Boolean.valueOf(tabelaCookie.get("isLogged"))){
                        response.sendRedirect("telaInicial.jsp");
                    }

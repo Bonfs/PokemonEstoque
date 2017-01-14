@@ -20,6 +20,4 @@ public class Treinador extends Usuario{
         this.nomeDaMae = nomeDaMae;
     }
     
-    
-    
 }

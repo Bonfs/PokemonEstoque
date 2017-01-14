@@ -92,7 +92,7 @@ public class LoginServlet extends HttpServlet {
             String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";//problema de acentuação
             rs = db.selectSQL(query);
             if(rs.next()){
-                login = rs.getString("email");
+                login = rs.getString("login");
                 isLogged = true;
             }
             Resultado = query;
@@ -104,10 +104,10 @@ public class LoginServlet extends HttpServlet {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             Cookie loginCookie = new Cookie("login", login);
-            Cookie respCookie = new Cookie("Resp", Resultado);
+            Cookie respCookie = new Cookie("QUERY", Resultado);
             Cookie logged = new Cookie("isLogged", Boolean.toString(isLogged));
 
-            RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
+            //RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
             response.addCookie(loginCookie);
             response.addCookie(respCookie);
             response.addCookie(logged);
