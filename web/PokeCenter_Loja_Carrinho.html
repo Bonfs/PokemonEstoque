@@ -37,6 +37,65 @@
 
 					<h2>Sacola de Compras</h2>
 
+					<div class="elemento_carrinho">
+						<div class="col1_elemento_carrinho">
+							<div class="bg-produto"> <div class="img-produto"> <img src="img/default.png"> </div> </div>
+						</div>
+						<div class="col2_elemento_carrinho">
+							<h2>Produto Generico</h2>
+							<p>Evidentemente, a percepção das é uma das consequências do processo de comunicação como um todo.</p>
+							<br>
+							<ul>
+								<li><a href="#"><div class="icon_lixeira"><img src="img/lixeira.png"></div>Remover produto</a></li>
+								<li>QUANTIDADE: <input type="number" name="quantidade" min="1" max="100" value="1"></li>
+							</ul>
+						</div>
+
+						<div class="col3_elemento_carrinho">
+							<div>Unidade: R$ 00,00</div>
+							<div>SubTotal: R$ 00,00</div>
+						</div>
+					</div>
+
+					<div class="elemento_carrinho">
+						<div class="col1_elemento_carrinho">
+							<div class="bg-produto"> <div class="img-produto"> <img src="img/default.png"> </div> </div>
+						</div>
+						<div class="col2_elemento_carrinho">
+							<h2>Produto Generico</h2>
+							<p>Evidentemente, a percepção das é uma das consequências do processo de comunicação como um todo.</p>
+							<br>
+							<ul>
+								<li><a href="#"><div class="icon_lixeira"><img src="img/lixeira.png"></div>Remover produto</a></li>
+								<li>QUANTIDADE: <input type="number" name="quantidade" min="1" max="100" value="1"></li>
+							</ul>
+						</div>
+
+						<div class="col3_elemento_carrinho">
+							<div>Unidade: R$ 00,00</div>
+							<div>SubTotal: R$ 00,00</div>
+						</div>
+					</div>
+					
+					<div class="elemento_carrinho">
+						<div class="col1_elemento_carrinho">
+							<div class="bg-produto"> <div class="img-produto"> <img src="img/default.png"> </div> </div>
+						</div>
+						<div class="col2_elemento_carrinho">
+							<h2>Produto Generico</h2>
+							<p>Evidentemente, a percepção das é uma das consequências do processo de comunicação como um todo.</p>
+							<br>
+							<ul>
+								<li><a href="#"><div class="icon_lixeira"><img src="img/lixeira.png"></div>Remover produto</a></li>
+								<li>QUANTIDADE: <input type="number" name="quantidade" min="1" max="100" value="1"></li>
+							</ul>
+						</div>
+
+						<div class="col3_elemento_carrinho">
+							<div>Unidade: R$ 00,00</div>
+							<div>SubTotal: R$ 00,00</div>
+						</div>
+					</div>
 					
 					<div id="baseCarrinho">
 						<div class="col1_carrinho"> <h3>Total: R$00,00</h3> </div>
@@ -73,7 +132,7 @@
 			x.getElementsByTagName("h2")[0].innerHTML = txt + " ("+numero+")";
 		
 		}else{ //Deixa a caixa vazia com a mensagem: Sacola está vazia 
-		
+			
 			var x = document.getElementById("produtoDescri");
 			x.getElementsByTagName("h2")[0].style.textAlign = "center";
 			x.getElementsByTagName("h2")[0].innerHTML = "Sacola está vazia";
