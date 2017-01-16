@@ -19,24 +19,26 @@
             String login = "nhammm";
             Cookie[] cookies = request.getCookies();
             Hashtable<String, String> tabelaCookie = new Hashtable<String, String>();
-            
-            
             if(cookies != null){
                for(Cookie cookie : cookies){
                    tabelaCookie.put(cookie.getName(), cookie.getValue());                   
                 }
+               
                if(Boolean.valueOf(tabelaCookie.get("isLogged"))){
                    login = tabelaCookie.get("login");
-                   response.sendRedirect("PokeCenter_Loja.jsp");
-                   
-               } else{ 
-                   response.sendRedirect("");
+               }
+               else{
+                   response.sendRedirect("home.jsp");
                }
             }
             else{
-                response.sendRedirect("");
+                response.sendRedirect("home.jsp");
             }
         %>
         <h1>Olá <%=login%>!</h1>
+        <a href="/PokemonEstoque/">
+            <button name="logoff" onclick="eraseCookieData()">DESLOGAR</button>
+        </a>  
     </body>
+    <script src="js/cookieHandler.js"></script>
 </html>
