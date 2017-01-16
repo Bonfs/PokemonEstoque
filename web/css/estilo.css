@@ -1,21 +1,9 @@
-*{
-	margin: 0px;
-	padding: 0px;
-	text-decoration: none;
-	list-style: none;
-	border:none;
-}
-
+*{ margin: 0px; padding: 0px; text-decoration: none; list-style: none; border:none; }
 body{ font-size: 62.5%; }
 img{ width: 100% }
-h1{
-	text-align: center;
-	padding: 10px 0px 20px;
-	font-family: ABeeZee-Regular, Calibri, San Serif;
-}
-a{
-	color:#6f6f6f;
-}
+a{ color:#6f6f6f; }
+h1{ text-align: center; padding: 10px 0px 20px; font-family: ABeeZee-Regular, Calibri, San Serif; }
+h2{ padding: 10px 0px 20px; font-family: ABeeZee-Regular, Calibri, San Serif; }
 
 #container1,#container2,#container3{
 	position: absolute;
@@ -29,13 +17,10 @@ a{
 }
 
 #container1{ background-image: url('../img/PokeCenter_BG_1.jpg'); }
-
 #container2{ background-image: url('../img/PokeCenter_BG_2.jpg'); }
-
 #container3{ 
 	background-size: 3%; 
-	background-image: url('../img/PokeCenter_BG_3.jpg');
-	/**background-color: #f00;**/  
+	background-image: url('../img/PokeCenter_BG_3.jpg');  
 	color: #6f6f6f;
 }
 
@@ -72,10 +57,7 @@ header{
 	padding: 30px 0px 10px;
 }
 
-#logo_lj{
-	float: left;
-	width: 24%;
-}
+#logo_lj{ float: left; width: 24%; }
 
 #menuSite{ float: left; width: 56%; }
 #menuSite ul{ text-align: center; margin-top: 35px; }
@@ -129,9 +111,7 @@ input[type="text"], input[type="password"], input[type="number"], select, option
 	text-align: center;
 }
 
-input[name="descricao"]{
-	height: 102px;
-}
+input[name="descricao"]{ height: 102px; }
 
 .botao{
 	position: relative;
@@ -150,10 +130,7 @@ input[name="descricao"]{
 #login p{ text-align: center; margin-top: 10px; clear: both; }
 #login p a{ color:#ffffff; }
 
-footer{
-	width: 100%;
-	margin-top: 80px;
-}
+footer{ width: 100%; margin-top: 80px; }
 
 #footer1{ 
 	width:50%; 
@@ -224,14 +201,14 @@ footer{
 .produto div p{
 	color: #6f6f6f;
 	text-align: center;
-	font-size: 1.2rem;
+	font-size: 1.2em;
 }
 
 #produtoDescri{
 	width: calc(100% - 60px);
 	padding: 30px;
 	background-color: #fff;
-	min-height: 360px;
+	min-height: 345px;
 	border-radius: 15px;
 	margin-top: 20px;
 	box-shadow: 5px 5px 4px rgba(0,0,0,.1);
@@ -242,14 +219,14 @@ footer{
 #coluna2{float: left; width: 48%; margin-left: 8%;} /**background-color: green;}**/
 
 .bg-produto{
-border-radius: 10%;
-padding: 5px;
-background-image: linear-gradient(to right, #2482ea 0%, #14eaa9 100%);
+	border-radius: 10%;
+	padding: 5px;
+	background-image: linear-gradient(to right, #2482ea 0%, #14eaa9 100%);
 }
 
 .img-produto{
-border-radius: 9%;
-background-color: #ffffff;	
+	border-radius: 9%;
+	background-color: #ffffff;	
 }
 
 .botao_null{
@@ -257,7 +234,7 @@ background-color: #ffffff;
 	padding: 10px 22px;
 	background-image: linear-gradient(to right, #2482ea, #14eaa9);
 	color:#ffffff;
-	font-size: 0.9em;
+	font-size: 0.9rem;
 	text-align:center;
 	border-radius:50px;
 	box-shadow:4px 4px 1px rgba(0,0,0,.2);
@@ -279,7 +256,7 @@ input[name="quantidade"]{
 .elemento_carrinho{
 	width: 100%;
 	height: 160px;
-	padding: 20px 0px 10px;
+	padding: 20px 0px;
 	border-bottom: 1px solid #c3c3c3;
 }
 
@@ -302,4 +279,36 @@ input[name="quantidade"]{
 	width: 50%;
 	padding: 20px 0px;
 	text-align: center;
+}
+
+#Informacoes ul li{
+	margin-bottom: 15px;
+}
+
+#Informacoes{
+	float: left;
+	width: 90%;
+}
+
+.icon_editar{
+	float: left;
+	width: 10%;
+}
+
+.icon_editar li{
+	float: left;
+}
+
+.tratador{
+	padding: 10px 0px 6px;
+	border-bottom: 1px solid #c3c3c3; 
+}
+
+.tratador ul li{
+	display: inline-block;
+	margin: 0px 50px 0px 0px;
+}
+.icon{
+width: 22px;
+float: left;
 }
