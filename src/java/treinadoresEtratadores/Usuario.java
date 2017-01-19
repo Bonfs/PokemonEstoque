@@ -5,14 +5,45 @@
  */
 package treinadoresEtratadores;
 
+import com.sun.xml.wss.saml.AnyType;
+
 /**
  *
  * @author matheus
  */
 public class Usuario {
+    private boolean tratador=false;
     private int ID;
     private String login, nome, email, endereco, telefone;
-
+    private String Esp;
+    
+    public Usuario(int ID,String login,String nome,String email,String endereco,String telefone,boolean Gerente){
+        this.ID=ID;
+        this.login=login;
+        this.nome=nome;
+        this.email=email;
+        this.endereco=endereco;
+        this.telefone=telefone;
+        this.tratador=true;
+        Esp =String.valueOf(Gerente);
+        
+    }
+    public Usuario(int ID,String login,String nome,String email,String endereco,String telefone,String nomeDaMae){
+        this.ID=ID;
+        this.login=login;
+        this.nome=nome;
+        this.email=email;
+        this.endereco=endereco;
+        this.telefone=telefone;
+        this.tratador=false;
+        Esp = nomeDaMae;
+    }
+    public String getEsp(){
+            return Esp;
+    }
+    public boolean getTratador(){
+        return tratador;
+    }
     public int getID() {
         return ID;
     }

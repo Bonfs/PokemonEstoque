@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="treinadoresEtratadores.*"%>
 <%@page import="java.util.Hashtable"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,6 +18,16 @@
     <body>
         <% 
             String login = "nhammm";
+            //Usuario User=null;
+            Usuario User = null;
+            if(session.getAttribute("User") != null) {
+                User = (Usuario) session.getAttribute("User");
+            }
+            if (User == null) {
+                response.sendRedirect("home.jsp");
+            }
+            
+            /*
             Cookie[] cookies = request.getCookies();
             Hashtable<String, String> tabelaCookie = new Hashtable<String, String>();
             if(cookies != null){
@@ -33,11 +44,11 @@
             }
             else{
                 response.sendRedirect("home.jsp");
-            }
+            }*/
         %>
-        <h1>Olá <%=login%>!</h1>
-        <a href="/PokemonEstoque/">
-            <button name="logoff" onclick="eraseCookieData()">DESLOGAR</button>
+        <h1>Olá <%=User.getTratador()%>!</h1>
+        <a href="${pageContext.request.contextPath}/LoginServlet?acao=Deslogar">
+            <button name="acao" value="Deslogar" >DESLOGAR</button>
         </a>  
     </body>
     <script src="js/cookieHandler.js"></script>

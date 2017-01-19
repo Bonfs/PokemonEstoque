@@ -9,15 +9,17 @@ package treinadoresEtratadores;
  *
  * @author matheus
  */
-public class Tratador {
-    private boolean tipo;//se true o tratador vira gerente
-
-    public boolean isTipo() {
-        return tipo;
+public class Tratador{
+    private boolean gerente;//se true o tratador vira gerente
+    public Tratador(boolean gerente){
+        this.gerente=gerente;
+    }
+    public boolean isGerente() {
+        return gerente;
     }
 
-    public void setTipo(boolean tipo) {
-        this.tipo = tipo;
+    public void setGerente(boolean tipo) {
+        this.gerente = tipo;
     }
     
     

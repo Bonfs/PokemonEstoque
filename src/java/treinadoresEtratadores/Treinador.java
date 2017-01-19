@@ -9,9 +9,11 @@ package treinadoresEtratadores;
  *
  * @author matheus
  */
-public class Treinador extends Usuario{
+public class Treinador{
     private String nomeDaMae;
-
+    public Treinador(String nomeDaMae){
+        this.nomeDaMae = nomeDaMae;
+    }
     public String getNomeDaMae() {
         return nomeDaMae;
     }

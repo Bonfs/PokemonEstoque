@@ -18,6 +18,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import treinadoresEtratadores.Tratador;
+import treinadoresEtratadores.Treinador;
+import treinadoresEtratadores.Usuario;
 
 /**
  *
@@ -64,8 +68,11 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        RequestDispatcher view = request.getRequestDispatcher("/index.jsp");
-        view.forward(request, response);
+        if(request.getParameter("acao").equals("Deslogar")){
+            HttpSession sessao = request.getSession();
+            sessao.invalidate();
+            response.sendRedirect("home.jsp");
+        }
     }
 
     /**
@@ -76,14 +83,11 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String login = request.getParameter("login");
-        String pswd = request.getParameter("senha");
-        boolean isLogged = false;
+    private boolean Login(String login,String pswd, HttpServletRequest request, HttpServletResponse response) throws IOException{
+        boolean isLogged = false,tipo=false;
         String Resultado="";
         ResultSet rs;
+        Usuario User = null;
         
         
         //Acessando o Banco de Dados
@@ -92,30 +96,55 @@ public class LoginServlet extends HttpServlet {
             String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";//problema de acentuação
             rs = db.selectSQL(query);
             if(rs.next()){
+                int ID = Integer.parseInt(rs.getString("ID"));
                 login = rs.getString("login");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                String endereco = rs.getString("endereco");
+                String telefone = rs.getString("telefone");
+                if(Boolean.getBoolean(rs.getString("tratador"))){
+                    User = new Usuario(ID,login,nome,email,endereco,telefone,false);
+                    tipo=true;
+                }else{
+                    User = new Usuario(ID,login,nome,email,endereco,telefone,"Nome da Mae");
+                }
                 isLogged = true;
+            }else{
+                response.sendRedirect("home.jsp");
+                return false;
             }
-            Resultado = query;
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+            //Resultado = query;
+        } catch (SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
-            Cookie loginCookie = new Cookie("login", login);
-            Cookie respCookie = new Cookie("QUERY", Resultado);
+            //Cookie loginCookie = new Cookie("login", login);
+            //Cookie respCookie = new Cookie("QUERY", Resultado);
             Cookie logged = new Cookie("isLogged", Boolean.toString(isLogged));
-
             //RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
-            response.addCookie(loginCookie);
-            response.addCookie(respCookie);
+            //response.addCookie(loginCookie);
+            //response.addCookie(respCookie);
             response.addCookie(logged);
             //view.forward(request, response);
+            HttpSession sessao = request.getSession();
+            sessao.setAttribute("User", User);
+            sessao.setAttribute("tipo", tipo);
+            db.connectionClose();
             response.sendRedirect("telaInicial.jsp");
             //processRequest(request, response);
-            db.connectionClose();
+            
+            
         }
+        return isLogged;
+    }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(request.getParameter("acao").equals("ENTRAR")) {
+            String login = request.getParameter("login");
+            String pswd = request.getParameter("senha");
+            Login(login,pswd,request,response);
+        }
+        
+        
     }
 
     /**

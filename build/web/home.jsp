@@ -7,7 +7,7 @@
 		<title>Início</title>
 	</head>
 	<body>
-            <%
+            <%--
                 Cookie[] cookies = request.getCookies();
                 if(cookies != null){
                    Hashtable<String, String> tabelaCookie = new Hashtable<String, String>();
@@ -19,7 +19,7 @@
                        response.sendRedirect("telaInicial.jsp");
                    }
                 }
-            %>
+            --%>
 		<div id="container1">			
 			<div id="conteudo">
 				<div id="logo"><a href="home.jsp"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
@@ -37,8 +37,9 @@
 
 							<div class="legenda">SENHA:</div>
 							<input type="password" name="senha"><br>
+                                                        
 							
-							<input type="submit" value="ENTRAR" class="botao">
+							<input type="submit" name="acao" value="ENTRAR" class="botao">
 						</form>
 						<p><a href="#"> ESQUECEU SUA SENHA? </a></p>
 						<p><a href="cadastro_treinador.html"> CADASTRE-SE </a></p>
