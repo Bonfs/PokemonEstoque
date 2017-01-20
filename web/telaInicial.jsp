@@ -46,7 +46,8 @@
                 response.sendRedirect("home.jsp");
             }*/
         %>
-        <h1>Olá <%=User.getTratador()%>!</h1>
+        
+        <h1>Olá <%if(User.getTratador()) out.print(((Tratador) User).isGerente());else out.print(((Treinador) User).getNomeDaMae());%></h1>
         <a href="${pageContext.request.contextPath}/LoginServlet?acao=Deslogar">
             <button name="acao" value="Deslogar" >DESLOGAR</button>
         </a>  

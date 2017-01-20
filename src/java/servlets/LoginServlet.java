@@ -103,10 +103,10 @@ public class LoginServlet extends HttpServlet {
                 String endereco = rs.getString("endereco");
                 String telefone = rs.getString("telefone");
                 if(Boolean.getBoolean(rs.getString("tratador"))){
-                    User = new Usuario(ID,login,nome,email,endereco,telefone,false);
+                    User = new Tratador(ID,login,nome,email,endereco,telefone,false);
                     tipo=true;
                 }else{
-                    User = new Usuario(ID,login,nome,email,endereco,telefone,"Nome da Mae");
+                    User = new Treinador(ID,login,nome,email,endereco,telefone,"Nome da Mae");
                 }
                 isLogged = true;
             }else{

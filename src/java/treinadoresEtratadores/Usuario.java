@@ -17,29 +17,14 @@ public class Usuario {
     private String login, nome, email, endereco, telefone;
     private String Esp;
     
-    public Usuario(int ID,String login,String nome,String email,String endereco,String telefone,boolean Gerente){
+    public Usuario(int ID,String login,String nome,String email,String endereco,String telefone,boolean tratador){
         this.ID=ID;
         this.login=login;
         this.nome=nome;
         this.email=email;
         this.endereco=endereco;
         this.telefone=telefone;
-        this.tratador=true;
-        Esp =String.valueOf(Gerente);
-        
-    }
-    public Usuario(int ID,String login,String nome,String email,String endereco,String telefone,String nomeDaMae){
-        this.ID=ID;
-        this.login=login;
-        this.nome=nome;
-        this.email=email;
-        this.endereco=endereco;
-        this.telefone=telefone;
-        this.tratador=false;
-        Esp = nomeDaMae;
-    }
-    public String getEsp(){
-            return Esp;
+        this.tratador=tratador;
     }
     public boolean getTratador(){
         return tratador;
