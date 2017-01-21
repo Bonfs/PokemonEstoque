@@ -5,31 +5,56 @@
  */
 package vendas;
 
-import Itens.Pokemon;
+import Itens.Produto;
+import dbAccess.Access;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author matheus
  */
 public class VendaProduto {
-    private Pokemon poke;
-    private int pokemon_ID;
-    private int quantidade;
+    private Produto produt;
+    private int idProduto,quantidade;
     
-    private VendaProduto(){}
+    public int getIdProduto(){
+        return this.idProduto;
+    }
     
-    public VendaProduto(Pokemon poke, int quantidade){
-        this.poke = poke;
+    public VendaProduto(int idProduto, int quantidade) throws SQLException, IllegalAccessException, InstantiationException{
         this.quantidade = quantidade;
-        this.pokemon_ID = poke.getID();
+        this.idProduto = idProduto;
+        ResultSet rs;
+        Access db = new Access();
+        String query = "SELECT * FROM produto WHERE ID =\'" + idProduto + "\'";
+        rs = db.selectSQL(query);
+        if(rs.next()){
+            rs = db.selectSQL(query);
+            if(rs.next()){
+                idProduto = Integer.parseInt(rs.getString("ID"));
+                String nome = rs.getString("nome");
+                float preco = Float.parseFloat(rs.getString("preco"));
+                String description = rs.getString("descricao");
+                String ImgPath = rs.getString("galeria_id");
+                query = "SELECT * FROM galeria where id="+ImgPath;
+                rs = db.selectSQL(query);
+                if(rs.next()){
+                    ImgPath=rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao");
+                } else{
+                    ImgPath="default.png";
+                }
+                produt = new Produto(idProduto,nome,description,ImgPath,preco);
+            }
+        }
     }
 
-    public Pokemon getPoke() {
-        return poke;
+    public Produto getProduto() {
+        return produt;
     }
 
-    public void setPoke(Pokemon poke) {
-        this.poke = poke;
+    public void setProduto(Produto produt) {
+        this.produt = produt;
     }
 
     public int getQuantidade() {
@@ -38,6 +63,10 @@ public class VendaProduto {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public void incQuantidade(int quantidade) {
+        this.quantidade += quantidade; 
     }
     
 }

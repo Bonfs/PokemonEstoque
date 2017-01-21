@@ -11,10 +11,10 @@ package Itens;
  */
 public class Item {
     private int ID;
-    private String description, nome, imgPath;
-    public Item(int ID,String description,String nome,String imgPath){
+    private String descricao, nome, imgPath;
+    public Item(int ID,String descricao,String nome,String imgPath){
         this.ID= ID;
-        this.description= description;
+        this.descricao= descricao;
         this.nome= nome;
         this.imgPath= imgPath;
     }
@@ -27,12 +27,12 @@ public class Item {
         this.ID = ID;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescricao(String description) {
+        this.descricao = description;
     }
 
     public String getNome() {

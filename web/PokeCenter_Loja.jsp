@@ -31,9 +31,9 @@
                         int ID = Integer.parseInt(rs.getString("ID"));
                         String nome = rs.getString("nome");
                         float preco = Float.parseFloat(rs.getString("preco"));
-                        String description = rs.getString("descricao");
+                        String descricao = rs.getString("descricao");
                         String ImgPath = rs.getString("galeria_id");
-                        Produto produt = new Produto(ID,nome,description,ImgPath,preco);
+                        Produto produt = new Produto(ID,nome,descricao,ImgPath,preco);
                         Produtos.add(produt);
                     }
                     
@@ -72,7 +72,7 @@
 					</nav>
 					<nav id="menuUser">
 						<ul>
-							<li><a href="#">000 <img src="img/sacola_pokecenter_branca.png"></a></li>
+							<li><a href="PokeCenter_Loja_Carrinho.jsp"><%if(!User.getTratador()){out.print(((Treinador) User).getCarrinho().getQuantidade());}%><img src="img/sacola_pokecenter_branca.png"></a></li>
                                                         <%if(User == null) {%>
 							<li><a href="home.jsp">Login</a></li>
                                                         <%}else{%>
@@ -94,8 +94,8 @@
 				<div id="Produto">
                                         <% for(Produto produto : Produtos){ %>
 					<div id="Produto_<%=produto.getID()%>" class="produto">
-						<div> <a href="PokeCenter_Loja_Produto.html"><img src="img/<%=produto.getImgPath()%>"></a> </div>
-						<div> <a href="PokeCenter_Loja_Produto.html"><p> <%=produto.getNome()%> <br> <%=produto.getPreco()%> </p></a> </div>
+						<div> <a href="PokeCenter_Loja_Produto.jsp?ID=<%=produto.getID()%>"><img src="img/<%=produto.getImgPath()%>"></a> </div>
+						<div> <a href="PokeCenter_Loja_Produto.jsp?ID=<%=produto.getID()%>"><p> <%=produto.getNome()%> <br> <%=produto.getPreco()%> </p></a> </div>
 					</div>
                                         <%}%>
 					<div class="produto">

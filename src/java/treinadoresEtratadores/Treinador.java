@@ -5,11 +5,18 @@
  */
 package treinadoresEtratadores;
 
+import vendas.Carrinho;
+
 /**
  *
  * @author matheus
  */
 public class Treinador extends Usuario{
+    private Carrinho carrinho = new Carrinho(getID());
+
+    public Carrinho getCarrinho() {
+        return carrinho;
+    }
     private String nomeDaMae;
     
     public Treinador(int ID,String login,String nome,String email,String endereco,String telefone,String nomeDaMae){

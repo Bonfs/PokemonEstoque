@@ -22,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import treinadoresEtratadores.Tratador;
 import treinadoresEtratadores.Treinador;
 import treinadoresEtratadores.Usuario;
+import vendas.Carrinho;
 
 /**
  *
@@ -88,6 +89,7 @@ public class LoginServlet extends HttpServlet {
         String Resultado="";
         ResultSet rs;
         Usuario User = null;
+        Carrinho carrinho = null;
         
         
         //Acessando o Banco de Dados
