@@ -5,11 +5,16 @@
  */
 package vendas;
 
+import Itens.Produto;
+import dbAccess.Access;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import servlets.LoginServlet;
 
 /**
  *
@@ -56,7 +61,33 @@ public class Carrinho {
     public int getQuantidade(){
         return vendaProduto.size();
     }
+    private void fechaCarrinho() throws SQLException, IllegalAccessException, InstantiationException {
+        ResultSet rs;
+        Access db = new Access();
+        String query = "INSERT INTO `venda`(`treinador_id`,`data_de_venda`) VALUES ("+this.idTreinador+",\'"+new Date(System.currentTimeMillis())+"\');";
+        rs = db.insertSQL(query);
+        System.out.println(query);
+            if(rs.next()){
+                System.out.println("Passou");
+                int idVenda = Integer.parseInt(rs.getString("ID"));
+                for (VendaProduto produto : vendaProduto){
+                    int quantidade = produto.getQuantidade();
+                    int idProduto = produto.getProduto().getID();
+                    query = "INSERT INTO `venda_item`(`venda_id`,`produto_id`,`quantidade`) VALUES ("+idVenda+","+idProduto+","+quantidade+");";
+                    System.out.println(query);
+                    db.insertSQL(query);
+                }
+            }
+        this.vendaProduto.clear();
+        db.connectionClose();
+    }
+    
     public boolean encerrarCompra(){
+        try{
+            fechaCarrinho();
+        } catch (SQLException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
     }
 }

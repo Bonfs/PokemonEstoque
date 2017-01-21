@@ -7,6 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
+                <script src="js/PostMethod.js"></script>
 		<title>Sacola de Compras</title>
 	</head>
 	<body>
@@ -43,40 +44,19 @@
 				</div>	
 			</header>
                         <script>
-                            var myTimer;
-                            function post(path, params, method) {
-                                console.log("Entrou no POST");
-                                method = method || "post"; // Set method to post by default if not specified.
-
-                                // The rest of this code assumes you are not using a library.
-                                // It can be made less wordy if you use one.
-                                var form = document.createElement("form");
-                                form.setAttribute("method", method);
-                                form.setAttribute("action", path);
-
-                                for(var key in params) {
-                                    if(params.hasOwnProperty(key)) {
-                                        var hiddenField = document.createElement("input");
-                                        hiddenField.setAttribute("type", "hidden");
-                                        hiddenField.setAttribute("name", key);
-                                        hiddenField.setAttribute("value", params[key]);
-                                        console.log(key+" "+params[key]);
-                                        form.appendChild(hiddenField);
-                                     }
-                                }
-
-                                document.body.appendChild(form);
-                                form.submit();
-                            }
+                            var timeToAlter;
                             function alterQuantidade(id){
                                 for(var i = 0;i<document.getElementsByName("quantidade").length;i++)
                                     post("Venda",{acao:'AlterProduto',ID:i,quantdd:document.getElementsByName("quantidade")[i].value},"post");
                             }
                             function alterValue(id){
-                                window.clearTimeout(myTimer);
-                                myTimer = setTimeout(function(id){
+                                window.clearTimeout(timeToAlter);
+                                timeToAlter = setTimeout(function(id){
                                     alterQuantidade(id);
                                 }, 3000);
+                            }
+                            function Finaliza(){
+                                post("Venda",{acao:'Finaliza'},"post");
                             }
                             
                             
@@ -122,7 +102,7 @@
 					
 					<div id="baseCarrinho">
 						<div class="col1_carrinho"> <h3>Total: R$<%=Total%></h3> </div>
-						<div class="col2_carrinho"> <div class="botao_null">FINALIZAR COMPRA</div> </div>
+                                                <div class="col2_carrinho" onclick="Finaliza()"> <div class="botao_null">FINALIZAR COMPRA</div> </div>
 					</div> 
 
 				</div>

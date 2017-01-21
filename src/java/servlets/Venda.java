@@ -112,13 +112,18 @@ public class Venda extends HttpServlet {
             ((Treinador) User).getCarrinho().setProduto(id,quantidade);
             response.sendRedirect("PokeCenter_Loja.jsp");
         }else if(request.getParameter("acao").equals("AlterProduto")){
-            //processRequest(request, response);
             quantidade = Integer.parseInt(request.getParameter("quantdd"));
             id = Integer.parseInt(request.getParameter("ID"));
             if(sessao.getAttribute("User") != null) {
                 User = (Usuario) sessao.getAttribute("User");
             }
             ((Treinador) User).getCarrinho().alterProduto(id,quantidade);
+            response.sendRedirect("PokeCenter_Loja_Carrinho.jsp");
+        }else if(request.getParameter("acao").equals("Finaliza")){
+            if(sessao.getAttribute("User") != null) {
+                User = (Usuario) sessao.getAttribute("User");
+            }
+            ((Treinador) User).getCarrinho().encerrarCompra();
             response.sendRedirect("PokeCenter_Loja_Carrinho.jsp");
         }
         //processRequest(request, response);

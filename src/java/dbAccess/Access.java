@@ -108,5 +108,11 @@ public class Access {
             
             return rs;
     }
+    public ResultSet insertSQL(String query) throws SQLException, IllegalAccessException, InstantiationException {    
+            ResultSet rs = null;
+            statement.executeUpdate(query);
+            rs = statement.executeQuery("SELECT last_insert_rowid() as ID;");
+            return rs;
+    }
        
 }

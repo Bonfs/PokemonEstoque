@@ -30,23 +30,21 @@ public class VendaProduto {
         String query = "SELECT * FROM produto WHERE ID =\'" + idProduto + "\'";
         rs = db.selectSQL(query);
         if(rs.next()){
+            idProduto = Integer.parseInt(rs.getString("ID"));
+            String nome = rs.getString("nome");
+            float preco = Float.parseFloat(rs.getString("preco"));
+            String description = rs.getString("descricao");
+            String ImgPath = rs.getString("galeria_id");
+            query = "SELECT * FROM galeria where id="+ImgPath;
             rs = db.selectSQL(query);
             if(rs.next()){
-                idProduto = Integer.parseInt(rs.getString("ID"));
-                String nome = rs.getString("nome");
-                float preco = Float.parseFloat(rs.getString("preco"));
-                String description = rs.getString("descricao");
-                String ImgPath = rs.getString("galeria_id");
-                query = "SELECT * FROM galeria where id="+ImgPath;
-                rs = db.selectSQL(query);
-                if(rs.next()){
-                    ImgPath=rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao");
-                } else{
-                    ImgPath="default.png";
-                }
-                produt = new Produto(idProduto,nome,description,ImgPath,preco);
+                ImgPath=rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao");
+            } else{
+                ImgPath="default.png";
             }
+            produt = new Produto(idProduto,nome,description,ImgPath,preco);
         }
+        db.connectionClose();
         
     } 
     public VendaProduto(int idProduto, int quantidade) {
