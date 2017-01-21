@@ -4,11 +4,12 @@
     Author     : Prog
 --%>
 
+<%@page import="Itens.Produto"%>
+<%@page import="treinadoresEtratadores.*"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="dbAccess.Access"%>
 <%@page import="java.util.List"%>
-<%@page import="treinadoresEtratadores.Pokemon"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -18,25 +19,25 @@
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
 		<title>Loja PokeCenter</title>
                 <%
-                List<Pokemon> Produtos = new ArrayList<Pokemon>();;
+                List<Produto> Produtos = new ArrayList<Produto>();;
                 String Resultado="";
                 ResultSet rs;
+                Usuario User = null;
                 Access db = new Access();
                 String query = "SELECT * FROM produto";
                 rs = db.selectSQL(query);
                 try{
                     while(rs.next()){
-                        Pokemon poke = new Pokemon();
-                        poke.setID(Integer.parseInt(rs.getString("ID")));
-                        poke.setNome(rs.getString("nome"));
-                        poke.setTipo("");
-                        poke.setPreco(Float.parseFloat(rs.getString("preco")));
-                        poke.setDescription(rs.getString("descricao"));
-                        poke.setImgPath(rs.getString("galeria_id"));
-                        Produtos.add(poke);
+                        int ID = Integer.parseInt(rs.getString("ID"));
+                        String nome = rs.getString("nome");
+                        float preco = Float.parseFloat(rs.getString("preco"));
+                        String description = rs.getString("descricao");
+                        String ImgPath = rs.getString("galeria_id");
+                        Produto produt = new Produto(ID,nome,description,ImgPath,preco);
+                        Produtos.add(produt);
                     }
                     
-                    for(Pokemon produto : Produtos){
+                    for(Produto produto : Produtos){
                         query = "SELECT * FROM galeria where id="+produto.getImgPath();
                         rs = db.selectSQL(query);
                         if(rs.next()){
@@ -48,8 +49,14 @@
                     }
                 }finally{
                     db.connectionClose();
+                    HttpSession sessao = request.getSession();
+                    
+                    if(session.getAttribute("User") != null) {
+                        User = (Usuario) session.getAttribute("User");
+                    }
                 }
                 %>
+                
 	</head>
 	<body>
 		<div id="container3">			
@@ -66,7 +73,12 @@
 					<nav id="menuUser">
 						<ul>
 							<li><a href="#">000 <img src="img/sacola_pokecenter_branca.png"></a></li>
+                                                        <%if(User == null) {%>
 							<li><a href="home.jsp">Login</a></li>
+                                                        <%}else{%>
+                                                        <li><a href="PokeCenter_Tratador_Perfil.html"><%=User.getNome()%></a><br/><a href="${pageContext.request.contextPath}/LoginServlet?acao=Deslogar">Sair</a></li>
+							<!--li></li-->
+                                                        <%}%>
 						</ul>
 					</nav>
 				</div>	
@@ -80,7 +92,7 @@
 					<div id="lupa"> <img src="img/lupa.png" id="btBusca" alt="Buscar"/> </div>
 				</div>
 				<div id="Produto">
-                                        <% for(Pokemon produto : Produtos){ %>
+                                        <% for(Produto produto : Produtos){ %>
 					<div id="Produto_<%=produto.getID()%>" class="produto">
 						<div> <a href="PokeCenter_Loja_Produto.html"><img src="img/<%=produto.getImgPath()%>"></a> </div>
 						<div> <a href="PokeCenter_Loja_Produto.html"><p> <%=produto.getNome()%> <br> <%=produto.getPreco()%> </p></a> </div>

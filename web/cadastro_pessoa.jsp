@@ -1,3 +1,4 @@
+<%@page import="treinadoresEtratadores.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="dbAccess.Access"%>
 <%@page import="java.util.Hashtable"%>
@@ -7,30 +8,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
-		<title>Cadastro Treinador</title>
-                 <% 
-                     boolean tratador = false;
-                     String login = "";
-                    Cookie[] cookies = request.getCookies();
-                    Hashtable<String, String> tabelaCookie = new Hashtable<String, String>();
-                    if(cookies != null){
-                       for(Cookie cookie : cookies){
-                           tabelaCookie.put(cookie.getName(), cookie.getValue());                   
-                        }
-
-                       if(Boolean.valueOf(tabelaCookie.get("isLogged"))){
-                           Access db = new Access();
-                           login = tabelaCookie.get("login");
-                           String query = "SELECT tratador FROM usuario WHERE login =\'" + login + "\'";
-                           response.addCookie(new Cookie("resp",query));
-                           ResultSet rs = db.selectSQL(query);
-                           if(Integer.parseInt(rs.getString("tratador"))==1){
-                            tratador = true;
-                           }
-                       }
+                <% 
+                    //HttpSession sessao = request.getSession();
+                    boolean tratador = true;
+                    String login = "nhammm";
+                    //Usuario User=null;
+                    Usuario User = null;
+                    if(session != null && session.getAttribute("User") != null) {
+                        User = (Usuario) session.getAttribute("User");
                     }
-                    
-                 %>
+                %>
+                 <title>Cadastro Treinador</title>
 	</head>
        
 	<body>
@@ -38,7 +26,7 @@
 			<div id="conteudo">
 				<div id="logo"><a href="home.jsp"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
 				<div id="cadastro">
-					<h1> CADASTRO TREINADOR </h1>
+					<h1> CADASTRO <%if(User.getTratador()) out.print("TRATADOR");else out.print("TREINADOR");%> </h1>
 					<div id="coluna_cad1">
 						<form action="" method="post">
 							<div class="legenda">NOME:</div>
@@ -61,7 +49,7 @@
 						
 							<div class="legenda">TELEFONE:</div>
 							<input type="text" name="telefone"><br>
-							<%if(!tratador){%>
+							<%if(!User.getTratador()){%>
 							<div class="legenda">NOME DA MÃE:</div>
 							<input type="text" name="nome_mae"><br>
                                                         <%}%>
@@ -70,9 +58,8 @@
 
 							<div class="legenda">SENHA:</div>
 							<input type="password" name="senha"><br><br>
-                                                        <%if(tratador){%>
+                                                        <% if(User.getTratador() && (((Tratador) User).isGerente())){%>
                                                         <input type="checkbox" name="gerente">  Cadastrar como Gerente <br><br><br>
-                                                        
                                                         <%}%>
 							<input type="submit" value="CADASTRAR" class="botao">
 						</form>

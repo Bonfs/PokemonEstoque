@@ -95,19 +95,31 @@ public class LoginServlet extends HttpServlet {
         try {
             String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";//problema de acentuação
             rs = db.selectSQL(query);
-            if(rs.next()){
+            if(rs.next() && rs.getString("ID")!= null){
                 int ID = Integer.parseInt(rs.getString("ID"));
                 login = rs.getString("login");
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
                 String endereco = rs.getString("endereco");
                 String telefone = rs.getString("telefone");
-                if(Boolean.getBoolean(rs.getString("tratador"))){
-                    User = new Tratador(ID,login,nome,email,endereco,telefone,false);
+                String tratador = rs.getString("tratador");
+                
+                if(tratador.equals("1")){
+                    query = "SELECT tipo FROM tratador WHERE tratador_id =" + ID ;//problema de acentuação
+                    rs = db.selectSQL(query);
+                    if(rs.next()){
+                        User = new Tratador(ID,login,nome,email,endereco,telefone,rs.getBoolean("tipo"));
+                    }
                     tipo=true;
                 }else{
-                    User = new Treinador(ID,login,nome,email,endereco,telefone,"Nome da Mae");
+                    query = "SELECT nome_da_mae FROM treinador WHERE treinador_id =" + ID ;//problema de acentuação
+                    rs = db.selectSQL(query);
+                    if(rs.next()){
+                        User = new Treinador(ID,login,nome,email,endereco,telefone,rs.getString("nome_da_mae"));
+                    }
                 }
+                db.connectionClose();
+                
                 isLogged = true;
             }else{
                 response.sendRedirect("home.jsp");
@@ -117,20 +129,15 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
-            //Cookie loginCookie = new Cookie("login", login);
-            //Cookie respCookie = new Cookie("QUERY", Resultado);
-            Cookie logged = new Cookie("isLogged", Boolean.toString(isLogged));
-            //RequestDispatcher view = request.getRequestDispatcher("/telaInicial.jsp");
-            //response.addCookie(loginCookie);
-            //response.addCookie(respCookie);
-            response.addCookie(logged);
-            //view.forward(request, response);
             HttpSession sessao = request.getSession();
-            sessao.setAttribute("User", User);
-            sessao.setAttribute("tipo", tipo);
-            db.connectionClose();
-            response.sendRedirect("telaInicial.jsp");
-            //processRequest(request, response);
+            if(User != null){
+                sessao.setAttribute("User", User);
+                if(User.getTratador()){
+                    response.sendRedirect("telaInicial.jsp");
+                }else{
+                    response.sendRedirect("PokeCenter_Loja.jsp");
+                }
+            } 
             
             
         }

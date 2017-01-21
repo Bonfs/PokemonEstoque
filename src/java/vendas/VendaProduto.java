@@ -5,7 +5,7 @@
  */
 package vendas;
 
-import treinadoresEtratadores.Pokemon;
+import Itens.Pokemon;
 
 /**
  *

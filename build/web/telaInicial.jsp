@@ -17,6 +17,7 @@
     </head>
     <body>
         <% 
+            HttpSession sessao = request.getSession();
             String login = "nhammm";
             //Usuario User=null;
             Usuario User = null;
@@ -26,26 +27,8 @@
             if (User == null) {
                 response.sendRedirect("home.jsp");
             }
-            
-            /*
-            Cookie[] cookies = request.getCookies();
-            Hashtable<String, String> tabelaCookie = new Hashtable<String, String>();
-            if(cookies != null){
-               for(Cookie cookie : cookies){
-                   tabelaCookie.put(cookie.getName(), cookie.getValue());                   
-                }
-               
-               if(Boolean.valueOf(tabelaCookie.get("isLogged"))){
-                   login = tabelaCookie.get("login");
-               }
-               else{
-                   response.sendRedirect("home.jsp");
-               }
-            }
-            else{
-                response.sendRedirect("home.jsp");
-            }*/
         %>
+        
         
         <h1>Olá <%if(User.getTratador()) out.print(((Tratador) User).isGerente());else out.print(((Treinador) User).getNomeDaMae());%></h1>
         <a href="${pageContext.request.contextPath}/LoginServlet?acao=Deslogar">
