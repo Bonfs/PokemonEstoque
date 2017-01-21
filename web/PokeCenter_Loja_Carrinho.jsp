@@ -1,3 +1,7 @@
+<%@page import="vendas.VendaProduto"%>
+<%@page import="treinadoresEtratadores.Tratador"%>
+<%@page import="treinadoresEtratadores.Treinador"%>
+<%@page import="treinadoresEtratadores.Usuario"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -6,6 +10,14 @@
 		<title>Sacola de Compras</title>
 	</head>
 	<body>
+                <%
+                    Usuario User = null;
+                    if(session.getAttribute("User") != null) {
+                        User = (Usuario) session.getAttribute("User");
+                    }
+                    float Total = 0;
+                    int counter = 0;
+                %>
 		<div id="container3">			
 			<header>
 				<div id="menu_topo">
@@ -19,13 +31,57 @@
 					</nav>
 					<nav id="menuUser">
 						<ul>
-							<li><a href="PokeCenter_Loja_Carrinho.html">000 <img src="img/sacola_pokecenter_branca.png"></a></li>
+							<li><a href="PokeCenter_Loja_Carrinho.jsp"><%if(!User.getTratador()){out.print(((Treinador) User).getCarrinho().getQuantidade());}%><img src="img/sacola_pokecenter_branca.png"></a></li>
+                                                        <%if(User == null) {%>
 							<li><a href="home.jsp">Login</a></li>
+                                                        <%}else{%>
+                                                        <li><a href="PokeCenter_Tratador_Perfil.html"><%=User.getNome()%></a><br/><a href="${pageContext.request.contextPath}/LoginServlet?acao=Deslogar">Sair</a></li>
+							<!--li></li-->
+                                                        <%}%>
 						</ul>
 					</nav>
 				</div>	
 			</header>
+                        <script>
+                            var myTimer;
+                            function post(path, params, method) {
+                                console.log("Entrou no POST");
+                                method = method || "post"; // Set method to post by default if not specified.
 
+                                // The rest of this code assumes you are not using a library.
+                                // It can be made less wordy if you use one.
+                                var form = document.createElement("form");
+                                form.setAttribute("method", method);
+                                form.setAttribute("action", path);
+
+                                for(var key in params) {
+                                    if(params.hasOwnProperty(key)) {
+                                        var hiddenField = document.createElement("input");
+                                        hiddenField.setAttribute("type", "hidden");
+                                        hiddenField.setAttribute("name", key);
+                                        hiddenField.setAttribute("value", params[key]);
+                                        console.log(key+" "+params[key]);
+                                        form.appendChild(hiddenField);
+                                     }
+                                }
+
+                                document.body.appendChild(form);
+                                form.submit();
+                            }
+                            function alterQuantidade(id){
+                                for(var i = 0;i<document.getElementsByName("quantidade").length;i++)
+                                    post("Venda",{acao:'AlterProduto',ID:i,quantdd:document.getElementsByName("quantidade")[i].value},"post");
+                            }
+                            function alterValue(id){
+                                window.clearTimeout(myTimer);
+                                myTimer = setTimeout(function(id){
+                                    alterQuantidade(id);
+                                }, 3000);
+                            }
+                            
+                            
+                        </script>
+                        
 			<div style="clear:both;"></div>
 
 			<div id="conteudo">
@@ -37,92 +93,35 @@
 
 					<h2>Sacola de Compras</h2>
 
+					<%if(User!=null && !User.getTratador() && (((Treinador) User).getCarrinho().getQuantidade()) > 0){
+                                            for(VendaProduto produt : ((Treinador) User).getCarrinho().getLista()){%>
 					<div class="elemento_carrinho">
 						<div class="col1_elemento_carrinho">
-							<div class="bg-produto"> <div class="img-produto"> <img src="img/default.png"> </div> </div>
+							<div class="bg-produto"> <div class="img-produto"> <img src="img/<%=produt.getProduto().getImgPath()%>"> </div> </div>
 						</div>
 						<div class="col2_elemento_carrinho">
-							<h2>Produto Generico</h2>
-							<p>Evidentemente, a percepção das é uma das consequências do processo de comunicação como um todo.</p>
-<<<<<<< HEAD
-=======
+							<h2><%=produt.getProduto().getNome()%></h2>
+							<p><%=produt.getProduto().getDescricao()%></p>
 							<br>
->>>>>>> 12f8a637d836d2cbeea5ea9a49255f7cba2c15a2
 							<ul>
-								<li><a href="#"><div class="icon_lixeira"><img src="img/lixeira.png"></div>Remover produto</a></li>
-								<li>QUANTIDADE: <input type="number" name="quantidade" min="1" max="100" value="1"></li>
+                                                            <li><a href="Venda?acao=REMOVER&ID=<%=counter%>"><div class="icon_lixeira"><img src="img/lixeira.png"></div>Remover produto</a></li>
+                                                                <li>QUANTIDADE: <input type="number" name="quantidade" min="1" max="100" onclick="alterValue(<%=counter%>)" value="<%=produt.getQuantidade()%>"></li>
 							</ul>
 						</div>
 
 						<div class="col3_elemento_carrinho">
-							<div>Unidade: R$ 00,00</div>
-							<div>SubTotal: R$ 00,00</div>
-						</div>
+							<div>Unidade: R$ <%=produt.getProduto().getPreco()%></div>
+							<div>SubTotal: R$ <%=produt.getProduto().getPreco()*produt.getQuantidade()%></div>
+                                                        <%Total+=produt.getProduto().getPreco()*produt.getQuantidade();%>
+                                                </div>
 					</div>
 
-<<<<<<< HEAD
 					<div style="clear: both"></div>
-
-=======
->>>>>>> 12f8a637d836d2cbeea5ea9a49255f7cba2c15a2
-					<div class="elemento_carrinho">
-						<div class="col1_elemento_carrinho">
-							<div class="bg-produto"> <div class="img-produto"> <img src="img/default.png"> </div> </div>
-						</div>
-						<div class="col2_elemento_carrinho">
-							<h2>Produto Generico</h2>
-							<p>Evidentemente, a percepção das é uma das consequências do processo de comunicação como um todo.</p>
-<<<<<<< HEAD
-=======
-							<br>
->>>>>>> 12f8a637d836d2cbeea5ea9a49255f7cba2c15a2
-							<ul>
-								<li><a href="#"><div class="icon_lixeira"><img src="img/lixeira.png"></div>Remover produto</a></li>
-								<li>QUANTIDADE: <input type="number" name="quantidade" min="1" max="100" value="1"></li>
-							</ul>
-						</div>
-
-						<div class="col3_elemento_carrinho">
-							<div>Unidade: R$ 00,00</div>
-							<div>SubTotal: R$ 00,00</div>
-						</div>
-					</div>
-<<<<<<< HEAD
-
-					<div style="clear: both"></div>
-=======
->>>>>>> 12f8a637d836d2cbeea5ea9a49255f7cba2c15a2
-					
-					<div class="elemento_carrinho">
-						<div class="col1_elemento_carrinho">
-							<div class="bg-produto"> <div class="img-produto"> <img src="img/default.png"> </div> </div>
-						</div>
-						<div class="col2_elemento_carrinho">
-							<h2>Produto Generico</h2>
-							<p>Evidentemente, a percepção das é uma das consequências do processo de comunicação como um todo.</p>
-<<<<<<< HEAD
-=======
-							<br>
->>>>>>> 12f8a637d836d2cbeea5ea9a49255f7cba2c15a2
-							<ul>
-								<li><a href="#"><div class="icon_lixeira"><img src="img/lixeira.png"></div>Remover produto</a></li>
-								<li>QUANTIDADE: <input type="number" name="quantidade" min="1" max="100" value="1"></li>
-							</ul>
-						</div>
-
-						<div class="col3_elemento_carrinho">
-							<div>Unidade: R$ 00,00</div>
-							<div>SubTotal: R$ 00,00</div>
-						</div>
-					</div>
-<<<<<<< HEAD
-
-					<div style="clear: both"></div>
-=======
->>>>>>> 12f8a637d836d2cbeea5ea9a49255f7cba2c15a2
+                                        
+                                        <%counter++;}}%>
 					
 					<div id="baseCarrinho">
-						<div class="col1_carrinho"> <h3>Total: R$00,00</h3> </div>
+						<div class="col1_carrinho"> <h3>Total: R$<%=Total%></h3> </div>
 						<div class="col2_carrinho"> <div class="botao_null">FINALIZAR COMPRA</div> </div>
 					</div> 
 

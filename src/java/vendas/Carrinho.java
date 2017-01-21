@@ -19,7 +19,9 @@ public class Carrinho {
     private Date dataDeVenda;
     private int idTreinador;
     ArrayList<VendaProduto> vendaProduto;
-    
+    public ArrayList<VendaProduto> getLista(){
+        return this.vendaProduto;
+    }
     public Carrinho(int codTreinador){
         this.vendaProduto = new ArrayList();
         idTreinador = codTreinador;
@@ -35,16 +37,21 @@ public class Carrinho {
         if(IdEncontrado != -1){
             vendaProduto.get(IdEncontrado).incQuantidade(quantidade);
         }else{
-            try {
-                novo = new VendaProduto(ID,quantidade);
-            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
-                Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            novo = new VendaProduto(ID,quantidade);
             if(novo != null) {
                 vendaProduto.add(novo);
             }
         }
-        
+    }
+    public void alterProduto(int ID,int quantidade){
+        if(ID >= 0){
+            vendaProduto.get(ID).alterQuantidade(quantidade);
+        }
+    }
+    public void removeProduto(int ID){
+        if(ID >= 0){
+            vendaProduto.remove(ID);
+        }
     }
     public int getQuantidade(){
         return vendaProduto.size();

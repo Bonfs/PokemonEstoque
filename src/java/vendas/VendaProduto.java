@@ -9,6 +9,9 @@ import Itens.Produto;
 import dbAccess.Access;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import servlets.LoginServlet;
 
 /**
  *
@@ -21,10 +24,7 @@ public class VendaProduto {
     public int getIdProduto(){
         return this.idProduto;
     }
-    
-    public VendaProduto(int idProduto, int quantidade) throws SQLException, IllegalAccessException, InstantiationException{
-        this.quantidade = quantidade;
-        this.idProduto = idProduto;
+    private void Insert_Produto(int idProduto, int quantidade) throws SQLException, IllegalAccessException, InstantiationException {
         ResultSet rs;
         Access db = new Access();
         String query = "SELECT * FROM produto WHERE ID =\'" + idProduto + "\'";
@@ -47,6 +47,16 @@ public class VendaProduto {
                 produt = new Produto(idProduto,nome,description,ImgPath,preco);
             }
         }
+        
+    } 
+    public VendaProduto(int idProduto, int quantidade) {
+        this.quantidade = quantidade;
+        this.idProduto = idProduto;
+        try{
+            Insert_Produto(idProduto, quantidade);
+        } catch (SQLException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public Produto getProduto() {
@@ -67,6 +77,10 @@ public class VendaProduto {
 
     public void incQuantidade(int quantidade) {
         this.quantidade += quantidade; 
+    }
+
+    void alterQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
     
 }

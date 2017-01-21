@@ -43,7 +43,6 @@ public class Venda extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             /* TODO output your page here. You may use following sample code. */
-            
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -56,7 +55,7 @@ public class Venda extends HttpServlet {
             out.println("<h1>Servlet Venda at " + ((Treinador) User).getCarrinho().getQuantidade() + "</h1>");}
             out.println("<h1>Servlet Venda at " + request.getParameter("acao") + "</h1>");
             out.println("<h1>Servlet Venda at " + request.getParameter("ID")  + "</h1>");
-            out.println("<h1>Servlet Venda at " + request.getParameter("quantidade")  + "</h1>");
+            out.println("<h1>Servlet Venda at " + request.getParameter("quantdd")  + "</h1>");
             
             out.println("</body>");
             out.println("</html>");
@@ -75,7 +74,18 @@ public class Venda extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if(request.getParameter("acao").equals("REMOVER")){
+            Usuario User = null;
+            HttpSession sessao = request.getSession();
+            int id = Integer.parseInt(request.getParameter("ID"));
+            if(sessao.getAttribute("User") != null) {
+                User = (Usuario) sessao.getAttribute("User");
+            }
+            ((Treinador) User).getCarrinho().removeProduto(id);
+            response.sendRedirect("PokeCenter_Loja_Carrinho.jsp");
+        }else{
+            response.sendRedirect("home.jsp");
+        }
     }
 
     /**
@@ -100,9 +110,19 @@ public class Venda extends HttpServlet {
                 User = (Usuario) sessao.getAttribute("User");
             }
             ((Treinador) User).getCarrinho().setProduto(id,quantidade);
+            response.sendRedirect("PokeCenter_Loja.jsp");
+        }else if(request.getParameter("acao").equals("AlterProduto")){
+            //processRequest(request, response);
+            quantidade = Integer.parseInt(request.getParameter("quantdd"));
+            id = Integer.parseInt(request.getParameter("ID"));
+            if(sessao.getAttribute("User") != null) {
+                User = (Usuario) sessao.getAttribute("User");
+            }
+            ((Treinador) User).getCarrinho().alterProduto(id,quantidade);
+            response.sendRedirect("PokeCenter_Loja_Carrinho.jsp");
         }
         //processRequest(request, response);
-        response.sendRedirect("PokeCenter_Loja.jsp");
+        
         
     }
 
