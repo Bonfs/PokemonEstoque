@@ -18,7 +18,6 @@ public class Tratador extends Usuario{
     public boolean isGerente() {
         return gerente;
     }
-
     public void setGerente(boolean tipo) {
         this.gerente = tipo;
     }

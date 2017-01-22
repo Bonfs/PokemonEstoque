@@ -6,6 +6,7 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
 		<title>Tratador - PokeCenter</title>
+                <script src="js/PostMethod.js"></script>
 	</head>
 	<body>
 		<div id="container3">			
@@ -16,8 +17,10 @@
                         function Editar(id){
                             post("cadastro.jsp",{Alter:id})
                         }
+                        function Excluir(id){
+                            post("PokeCenter_Tratador_Lista.jsp",{Exclui_Func:id})
+                        }
                         </script>
-                        <script src="js/PostMethod.js"></script>
 			<div style="clear:both;"></div>
 
 			<div id="conteudo">
@@ -28,7 +31,15 @@
 				<div id="produtoDescri">
 					<h2>Lista de Tratadores</h2>
                                         <%
-                                        Access db = new Access();
+                                        Access db = new Access(); 
+                                        if(request.getParameter("Exclui_Func") != null){
+                                            int id = Integer.parseInt(request.getParameter("Exclui_Func"));
+                                            String query = "DELETE FROM usuario WHERE ID="+id;
+                                            db.insertSQL(query);
+
+                                            query = "DELETE FROM tratador WHERE tratador_id="+id;
+                                            db.insertSQL(query);
+                                        }
                                         ResultSet rs = db.selectSQL("SELECT ID,nome FROM usuario where tratador=1;");
                                         int id;    
                                         while(rs.next()){
@@ -38,7 +49,7 @@
 						<ul>
 							<li><a href="#" onclick="Editar(<%=id%>)"><%=rs.getString("nome")%></a></li>
 							<li><a href="#" onclick="Editar(<%=id%>)"> <div class="icon"><img src="img/editar.png"></div> Alterar </a></li>
-							<li><a href="#"> <div class="icon"><img src="img/lixeira.png"></div> Remover </a></li>
+							<li><a href="#" onclick="Excluir(<%=id%>)"> <div class="icon"><img src="img/lixeira.png"></div> Remover </a></li>
 						</ul>
 					</div>
                                         <%}

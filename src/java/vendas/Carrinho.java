@@ -98,10 +98,8 @@ public class Carrinho {
                 for (VendaProduto produto : vendaProduto){
                     int quantidade = produto.getQuantidade();
                     int idProduto = produto.getProduto().getID();
-                    System.out.println(query);
                     System.out.println("pt2");
                     query = "UPDATE estoque_produto SET quantidade=quantidade-"+quantidade+" where produto_id="+idProduto;
-                    System.out.println(query);
                     try {
                     db.insertSQL(query);
                     }catch (SQLException | IllegalAccessException | InstantiationException ex) {
