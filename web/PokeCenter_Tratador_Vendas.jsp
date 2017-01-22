@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="dbAccess.Access"%>
+<%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -11,6 +15,22 @@
                         <%
                         //SELECT v.ID,v.data_de_venda,u.nome from venda as v,usuario as u where v.treinador_id=u.ID;
                         //SELECT p.nome,v.quantidade,p.preco from venda_item as v,produto as p where v.venda_id=1 AND v.produto_id=p.ID;
+
+                        ResultSet rs;
+                        Access db = new Access();
+                        String query = "SELECT v.ID,v.data_de_venda,u.nome from venda as v,usuario as u where v.treinador_id=u.ID;";
+                        rs = db.selectSQL(query);
+                        ArrayList <ArrayList> vendas = new ArrayList();
+                        
+                        while(rs.next()){
+                            ArrayList venda = new ArrayList();
+                            venda.add(Integer.parseInt(rs.getString("ID")));
+                            venda.add(rs.getString("data_de_venda"));
+                            venda.add(rs.getString("nome"));
+                            vendas.add(venda);
+                        }
+                        query = "SELECT p.nome,v.quantidade,p.preco from venda_item as v,produto as p where v.venda_id=1 AND v.produto_id=p.ID;";
+                        rs = db.selectSQL(query);
                         %>
 			<div style="clear:both;"></div>
 
@@ -22,237 +42,50 @@
 
 				<div id="produtoDescri">
 					<h2>Vendas Realizadas</h2>
-
-					<div class="linha">
+                                        <%
+                                        int counter = 0;
+                                        float total;
+                                        for(ArrayList venda : vendas){
+                                            total=0;
+                                            if(counter == 0){
+                                                out.println("<div class=\"linha\">");
+                                            }
+                                        %>
 						<div class="venda_feita">
 							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Fulano de Tal </li>
+								<li> Codigo Venda: <%=venda.get(0)%> </li>
+								<li> Data: <%=venda.get(1)%> </li>
+								<li> Cliente: <%=venda.get(2)%> </li>
 								<li> 	 
+                                                                        <%
+                                                                        query = "SELECT p.nome,v.quantidade,p.preco from venda_item as v,produto as p where v.venda_id="+venda.get(0)+" AND v.produto_id=p.ID;";
+                                                                        rs = db.selectSQL(query);
+                                                                        while(rs.next()){
+                                                                           float total_produto = Integer.parseInt(rs.getString("quantidade"))*Float.parseFloat(rs.getString("preco"));
+                                                                           total+=total_produto;
+                                                                        %>
 									<li>											
 										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
+											<li><%=rs.getString("nome")%></li>
+											<li><%=rs.getString("quantidade")%></li>
+											<li>R$ <%=total_produto%></li>
 										</ul> 
 									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>	 
+                                                                        <%}%> 
 								</li>
-								<li> Preço total: R$ 400,00 </li>
+								<li> Preço total: R$ <%=total%> </li>
 							</ul>
 						</div>
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Fulano de Tal </li>
-								<li> 	 
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>	 
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Paulo Rogerio Matheus Bonfim Leitão Da Silva Souza </li>
-								<li> 
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>	
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-					</div>
-
-					<div style="clear: both;"></div>
-
-					<div class="linha">
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Fulano de Tal </li>
-								<li> 
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li> 
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Paulo Rogerio Matheus Bonfim Leitão Da Silva Souza </li>
-								<li> 	
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>	 
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Paulo Rogerio Matheus Bonfim Leitão Da Silva Souza </li>
-								<li> 	
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>	 
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-					</div>
-
-					<div style="clear: both;"></div>
-
-					<div class="linha">
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Paulo Rogerio Matheus Bonfim Leitão Da Silva Souza </li>
-								<li> 	 
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>	 
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Fulano de Tal </li>
-								<li>  
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-						<div class="venda_feita">
-							<ul>
-								<li> Codigo Venda: 00 </li>
-								<li> Data: 00/00/0000 </li>
-								<li> Cliente: Fulano de Tal </li>
-								<li> 
-									<li>											
-										<ul> 
-											<li>Pokebola</li>
-											<li>5</li>
-											<li>R$100,00</li>
-										</ul> 
-									</li>
-									<li>											
-										<ul> 
-											<li>Poção</li>
-											<li>15</li>
-											<li>R$300,00</li>
-										</ul> 
-									</li>
-								</li>
-								<li> Preço total: R$ 400,00 </li>
-							</ul>
-						</div>
-					</div>
-
-					<div style="clear: both;"></div>
+					<%
+                                           if(counter >= 3){
+                                               counter = 0;
+                                                out.println("</div>");
+                                                out.println("<div style=\"clear: both;\"></div>");
+                                            }else{
+                                                counter++;
+                                            }
+                                        }%>
+					
 					
 
 				</div>
