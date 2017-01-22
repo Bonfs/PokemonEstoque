@@ -24,14 +24,20 @@
                         query = "SELECT * FROM galeria where id="+ImgPath;
                         rs = db.selectSQL(query);
                         if(rs.next()){
-                            response.addCookie(new Cookie("Bug1", query));
                             ImgPath=rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao");
                         } else{
                             ImgPath="default.png";
                         }
                         produt = new Produto(ID,nome,description,ImgPath,preco);
                     }
-                    
+                    while(rs.next());
+                    query = "SELECT quantidade as q FROM estoque_produto where produto_id="+produt.getID();
+                    rs = db.selectSQL(query);
+                    System.out.println(rs.getString("q"));
+                    int quantidade = (Integer.parseInt(rs.getString("q")));
+                    if(quantidade<=0)
+                        response.sendRedirect("PokeCenter_Loja.jsp");
+                    db.connectionClose();
                 %>
                 <script src="js/Venda.js"></script>
 		<title><%=produt.getNome()%></title>
@@ -68,7 +74,7 @@
 								Quantidade: 
                                                                 <input type="hidden" name="acao" value="addProduto">
                                                                 <input type="hidden" name="ID" value="<%=produt.getID()%>">
-								<input type="number" name="quantidade" min="1" max="100" value="1"><br>
+                                                                <input type="number" name="quantidade" min="1" max="<%if(quantidade>100)out.print("100"); else out.print(quantidade);%>" value="1"><br>
                                                                 <input type="submit" value="ADICIONAR A SACOLA" class="botao_null" > 
 							</form>
 						</div> 

@@ -1,3 +1,4 @@
+<%@page import="vendas.Estoque"%>
 <%@page import="dbAccess.Access"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="Itens.Produto"%>
@@ -15,35 +16,9 @@
 			<jsp:include page="header.jsp" >
                             <jsp:param name="Manter" value="false" />
                         </jsp:include>
-                        <%List<Produto> Produtos = new ArrayList<Produto>();;
-                        String Resultado="";
-                        ResultSet rs;
-                        Access db = new Access();
-                        String query = "SELECT * FROM produto";
-                        rs = db.selectSQL(query);
-                        try{
-                            while(rs.next()){
-                                int ID = Integer.parseInt(rs.getString("ID"));
-                                String nome = rs.getString("nome");
-                                float preco = Float.parseFloat(rs.getString("preco"));
-                                String descricao = rs.getString("descricao");
-                                String ImgPath = rs.getString("galeria_id");
-                                Produto produt = new Produto(ID,nome,descricao,ImgPath,preco);
-                                Produtos.add(produt);
-                            }
-
-                            for(Produto produto : Produtos){
-                                query = "SELECT * FROM galeria where id="+produto.getImgPath();
-                                rs = db.selectSQL(query);
-                                if(rs.next()){
-                                    produto.setImgPath(rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao"));
-                                } else{
-                                    produto.setImgPath("default.png");
-                                }
-                            }
-                        }finally{
-                            db.connectionClose();
-                        }%>
+                        <%
+                        Estoque estoque = new Estoque();
+                        %>
 
 			<div style="clear:both;"></div>
 
@@ -55,16 +30,24 @@
 
 				<div id="produtoDescri">
 					<h2>Estoque de Produtos</h2>
-                                        <%for(Produto produto : Produtos){ %>
+                                        <%
+                                        int counter = 0;
+                                        for(Produto produto : estoque.getProdutos()){ 
+                                            if(estoque.getQuantidade(counter)>=0){
+                                        %>
 					<div class="produto_estoque">
 						<ul>
 							<li> <div class="produto_estoque_img"> <img src="img/<%=produto.getImgPath()%> "> </div> </li>
 							<li> <%=produto.getNome()%> </li>
 							<li> <%=produto.getPreco()%> </li>
-							<li> <%=produto.getDescricao()%> </li>
+							<li> <%=estoque.getQuantidade(counter)%> </li>
 						</ul>
 					</div>
-                                        <%}%>
+                                        <%
+                                            }
+                                        counter++;
+                                        }
+                                        %>
 				</div>
 			</div>
 

@@ -72,22 +72,44 @@ public class Carrinho {
         } catch (SQLException | IllegalAccessException | InstantiationException ex) {
             Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        
             if(rs != null){
-                String ID_String = rs.getString("ID");
+                    String ID_String = null;
+                try {
+                    ID_String = rs.getString("ID");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 System.out.println("Passou");
                 int idVenda = Integer.parseInt(ID_String);
+                
                 for (VendaProduto produto : vendaProduto){
                     int quantidade = produto.getQuantidade();
                     int idProduto = produto.getProduto().getID();
+                    System.out.println("pt1");
                     query = "INSERT INTO `venda_item`(`venda_id`,`produto_id`,`quantidade`) VALUES ("+idVenda+","+idProduto+","+quantidade+");";
                     System.out.println(query);
+                    try {
                     db.insertSQL(query);
+                    }catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                        Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                for (VendaProduto produto : vendaProduto){
+                    int quantidade = produto.getQuantidade();
+                    int idProduto = produto.getProduto().getID();
+                    System.out.println(query);
+                    System.out.println("pt2");
+                    query = "UPDATE estoque_produto SET quantidade=quantidade-"+quantidade+" where produto_id="+idProduto;
+                    System.out.println(query);
+                    try {
+                    db.insertSQL(query);
+                    }catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                        Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
-        }catch (SQLException | IllegalAccessException | InstantiationException ex) {
-            Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         this.vendaProduto.clear();
         db.connectionClose();
     }
