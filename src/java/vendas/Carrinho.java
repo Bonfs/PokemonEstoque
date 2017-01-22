@@ -61,15 +61,22 @@ public class Carrinho {
     public int getQuantidade(){
         return vendaProduto.size();
     }
-    private void fechaCarrinho() throws SQLException, IllegalAccessException, InstantiationException {
-        ResultSet rs;
+    private void fechaCarrinho(){
+        ResultSet rs = null;
         Access db = new Access();
         String query = "INSERT INTO `venda`(`treinador_id`,`data_de_venda`) VALUES ("+this.idTreinador+",\'"+new Date(System.currentTimeMillis())+"\');";
-        rs = db.insertSQL(query);
         System.out.println(query);
-            if(rs.next()){
+        
+        try {
+            rs = db.insertSQL(query);
+        } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+            Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            if(rs != null){
+                String ID_String = rs.getString("ID");
                 System.out.println("Passou");
-                int idVenda = Integer.parseInt(rs.getString("ID"));
+                int idVenda = Integer.parseInt(ID_String);
                 for (VendaProduto produto : vendaProduto){
                     int quantidade = produto.getQuantidade();
                     int idProduto = produto.getProduto().getID();
@@ -78,16 +85,15 @@ public class Carrinho {
                     db.insertSQL(query);
                 }
             }
+        }catch (SQLException | IllegalAccessException | InstantiationException ex) {
+            Logger.getLogger(Carrinho.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.vendaProduto.clear();
         db.connectionClose();
     }
     
     public boolean encerrarCompra(){
-        try{
-            fechaCarrinho();
-        } catch (SQLException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        fechaCarrinho();
         return true;
     }
 }

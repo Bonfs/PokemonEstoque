@@ -8,7 +8,10 @@
 	<body>
 		<div id="container3">			
 			<%@ include file="header.jsp" %>
-
+                        <%
+                        //SELECT v.ID,v.data_de_venda,u.nome from venda as v,usuario as u where v.treinador_id=u.ID;
+                        //SELECT p.nome,v.quantidade,p.preco from venda_item as v,produto as p where v.venda_id=1 AND v.produto_id=p.ID;
+                        %>
 			<div style="clear:both;"></div>
 
 			<div id="conteudo">

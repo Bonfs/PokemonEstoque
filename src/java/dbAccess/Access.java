@@ -122,7 +122,7 @@ public class Access {
             
             statement.executeUpdate(query);
             rs = statement.executeQuery("SELECT last_insert_rowid() as ID;");
-            statement.close();
+            //statement.close();
             return rs;
     }
        
