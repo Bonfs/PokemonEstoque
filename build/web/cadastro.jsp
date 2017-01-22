@@ -92,8 +92,9 @@
                      */
                     function Submit(){
                         var CPF=document.getElementsByName("cpf")[0].value;
-                        if(!VerificaCPF(CPF)){
-                            console.log("CPF Invalido");
+                        CPF=VerificaCPF(CPF);
+                        if(CPF==false){
+                            console.log("CPF invalido");
                             return false;
                         }
                         

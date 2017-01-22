@@ -1,4 +1,9 @@
-function VerificaCPF(strCpf) {
+function VerificaCPF(string) 
+{
+    var numsStr = string.replace(/[^0-9]/g,'');
+    return ValidaCPF(numsStr);
+}
+function ValidaCPF(strCpf) {
     var soma;
     var resto;
     soma = 0;
@@ -39,5 +44,5 @@ function VerificaCPF(strCpf) {
         return false;
     }
 
-    return true;
+    return strCpf;
 }
