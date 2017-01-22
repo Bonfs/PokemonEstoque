@@ -181,6 +181,7 @@ public class LoginServlet extends HttpServlet {
             }
             /*HttpSession sessao = request.getSession();
             sessao.invalidate();*/
+            db.connectionClose();
             if(Login(login,senha,request,response)){
                 response.sendRedirect("PokeCenter_Perfil.jsp");
             }else{
@@ -188,6 +189,47 @@ public class LoginServlet extends HttpServlet {
             }
         }else if(request.getParameter("acao").equals("CriaUser")){
             //Create
+            ResultSet rs = null;
+            Access db = new Access();
+            String CPF=request.getParameter("CPF");
+            String login=request.getParameter("login");
+            String senha=request.getParameter("senha");
+            String nome=request.getParameter("nome");
+            String email=request.getParameter("email");
+            String cidade=request.getParameter("cidade");
+            String endereco=request.getParameter("endereco");
+            String telefone=request.getParameter("telefone");
+            int tratador;
+            if(request.getParameter("gerente") != null){
+                tratador=1;
+            }else{
+                tratador=0;
+            }
+            String query = "INSERT INTO `usuario`(`login`,`senha`,`nome`,`email`,`endereco`,`cidade`,`telefone`,`cpf`,`tratador`) VALUES (\'"+login+"\',\'"+senha+"\',\'"+nome+"\',\'"+email+"\',\'"+endereco+"\',\'"+cidade+"\',\'"+telefone+"\',\'"+CPF+"\',"+tratador+");";
+            try {
+                rs = db.insertSQL(query);
+            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                if(rs != null){
+                    int ID = Integer.parseInt(rs.getString("ID"));
+                    if(request.getParameter("nome_mae") != null){
+                        System.out.print(ID+" é Treinador");
+                        String nome_mae=request.getParameter("nome_mae");
+                        query="INSERT INTO treinador (`nome_da_mae`,`treinador_id`) Values('"+nome_mae+"',"+ID+")";
+                    }else{
+                        System.out.print(ID+" é Tratador");
+                        int gerente=(request.getParameter("gerente").charAt(0) == 'f')?0:1;
+                        query="INSERT INTO tratador (`tipo`,`tratador_id`) Values("+gerente+","+ID+")";
+                    }
+                    db.insertSQL(query);
+                }
+            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            db.connectionClose();
+            
             response.sendRedirect("home.jsp");
         }
         

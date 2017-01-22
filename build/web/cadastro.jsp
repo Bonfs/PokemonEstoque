@@ -105,12 +105,12 @@
                             else
                                 post("LoginServlet",{acao:'UpdateUser',ID:ID,CPF:CPF,login:'<%=Perfil.getLogin()%>',senha:'<%=Perfil.getPswd()%>',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("nome_mae")[0].value},"post");
                         }else{
-                            var login=document.getElementsByName("nome")[0].value;
-                            var senha=document.getElementsByName("email")[0].value;
-                            if(Alter==0)
-                                post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].value},"post");
+                            var login=document.getElementsByName("login")[0].value;
+                            var senha=document.getElementsByName("senha")[0].value;
+                            if(<%=Alter%>==0)
+                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].value},"post");
                             else
-                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("nome_mae")[0].value},"post");
+                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName("nome_mae")[0].value},"post");
                         }
                     }
                     
