@@ -3,20 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/Poke/web/telaInicial.jsp</file>
-            <file>file:/F:/Poke/web/WEB-INF/web.xml</file>
-            <file>file:/F:/Poke/src/java/servlets/LoginServlet.java</file>
-            <file>file:/F:/Poke/src/java/Itens/Produto.java</file>
-            <file>file:/F:/Poke/src/java/treinadoresEtratadores/Tratador.java</file>
-            <file>file:/F:/Poke/web/index.jsp</file>
-            <file>file:/F:/Poke/web/cadastro_pessoa.jsp</file>
-            <file>file:/F:/Poke/web/home.jsp</file>
-            <file>file:/F:/Poke/src/java/Itens/Pokemon.java</file>
-            <file>file:/F:/Poke/web/index.html</file>
-            <file>file:/F:/Poke/web/PokeCenter_Tratador_Vendas.html</file>
-            <file>file:/F:/Poke/src/java/vendas/VendaProduto.java</file>
-            <file>file:/F:/Poke/src/java/Itens/Item.java</file>
-            <file>file:/F:/Poke/web/PokeCenter_Loja.jsp</file>
+            <file>file:/media/prog/Compart/Projetos/Poke/web/PokeCenter_Loja_Produto.jsp</file>
+            <file>file:/media/prog/Compart/Projetos/Poke/web/PokeCenter_Loja.jsp</file>
+            <file>file:/media/prog/Compart/Projetos/Poke/web/PokeCenter_Loja_Carrinho.jsp</file>
+            <file>file:/media/prog/Compart/Projetos/Poke/web/footer.jsp</file>
+            <file>file:/media/prog/Compart/Projetos/Poke/web/header.jsp</file>
         </group>
     </open-files>
 </project-private>

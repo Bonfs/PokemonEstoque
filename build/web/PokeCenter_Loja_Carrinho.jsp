@@ -8,41 +8,24 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
                 <script src="js/PostMethod.js"></script>
-		<title>Sacola de Compras</title>
-	</head>
-	<body>
                 <%
                     Usuario User = null;
                     if(session.getAttribute("User") != null) {
                         User = (Usuario) session.getAttribute("User");
                     }
+                %>
+		<title>Sacola de Compras</title>
+	</head>
+	<body>
+                <%
                     float Total = 0;
                     int counter = 0;
                 %>
 		<div id="container3">			
-			<header>
-				<div id="menu_topo">
-					<div id="logo_lj"><a href="PokeCenter_Loja.html"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
-					<nav id="menuSite">
-						<ul>
-							<li><a href="#">Sobre Nós</a></li>
-							<li><a href="#">Central de Ajuda</a></li>
-							<li><a href="#">Fale Conosco</a></li>
-						</ul>
-					</nav>
-					<nav id="menuUser">
-						<ul>
-							<li><a href="PokeCenter_Loja_Carrinho.jsp"><%if(!User.getTratador()){out.print(((Treinador) User).getCarrinho().getQuantidade());}%><img src="img/sacola_pokecenter_branca.png"></a></li>
-                                                        <%if(User == null) {%>
-							<li><a href="home.jsp">Login</a></li>
-                                                        <%}else{%>
-                                                        <li><a href="PokeCenter_Tratador_Perfil.html"><%=User.getNome()%></a><br/><a href="${pageContext.request.contextPath}/LoginServlet?acao=Deslogar">Sair</a></li>
-							<!--li></li-->
-                                                        <%}%>
-						</ul>
-					</nav>
-				</div>	
-			</header>
+			
+                    <jsp:include page="header.jsp" >
+                        <jsp:param name="Manter" value="false" />
+                    </jsp:include>
                         <script>
                             var timeToAlter;
                             function alterQuantidade(id){
@@ -73,7 +56,7 @@
 
 					<h2>Sacola de Compras</h2>
 
-					<%if(User!=null && !User.getTratador() && (((Treinador) User).getCarrinho().getQuantidade()) > 0){
+					<%if(User!=null && !User.isTratador() && (((Treinador) User).getCarrinho().getQuantidade()) > 0){
                                             for(VendaProduto produt : ((Treinador) User).getCarrinho().getLista()){%>
 					<div class="elemento_carrinho">
 						<div class="col1_elemento_carrinho">
@@ -109,19 +92,8 @@
 			</div>
 
 			<div style="clear:both;"></div>
-			
-			<footer>
-				<center>
-					<div id="footer1"><p>Poke Center © 2016</p></div>
-					<div id="footer_2">
-						<ul>
-							<li><a href="#">Ajuda</a></li>
-							<li><a href="#">Privacidade</a></li>
-							<li><a href="#">Termos</a></li>
-						</ul>
-					</div>
-				</center>
-			</footer>
+                        
+                        <%@ include file="footer.jsp" %>
 		</div>
 	</body>
 	<script type="text/javascript">

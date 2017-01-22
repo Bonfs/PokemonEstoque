@@ -19,8 +19,8 @@ public class Treinador extends Usuario{
     }
     private String nomeDaMae;
     
-    public Treinador(int ID,String login,String nome,String email,String endereco,String telefone,String nomeDaMae){
-        super(ID,login,nome,email,endereco,telefone,false);
+    public Treinador(int ID,long CPF,String login,String senha,String nome,String email,String cidade,String endereco,String telefone,String nomeDaMae){
+        super(ID,CPF,login,senha,nome,email,cidade,endereco,telefone,false);
         this.nomeDaMae = nomeDaMae;
     }
     public String getNomeDaMae() {

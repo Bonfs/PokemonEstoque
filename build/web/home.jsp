@@ -17,7 +17,7 @@
                 
                     if(session.getAttribute("User") != null) {
                         User = (Usuario) session.getAttribute("User");
-                        if(User.getTratador()){
+                        if(User.isTratador()){
                             response.sendRedirect("telaInicial.jsp");
                         }else{
                             response.sendRedirect("PokeCenter_Loja.jsp");
@@ -51,18 +51,8 @@
 				</div>
 			</div>
 			<div style="clear:both;"></div>
-			<footer>
-				<center>
-					<div id="footer1"><p>Poke Center © 2016</p></div>
-					<div id="footer2">
-						<ul>
-							<li><a href="#">Ajuda</a></li>
-							<li><a href="#">Privacidade</a></li>
-							<li><a href="#">Termos</a></li>
-						</ul>
-					</div>
-				</center>
-			</footer>
+			
+                        <%@ include file="footer.jsp" %>
 		</div>
 	</body>
 </html>

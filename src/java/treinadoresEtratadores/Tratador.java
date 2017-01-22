@@ -11,8 +11,8 @@ package treinadoresEtratadores;
  */
 public class Tratador extends Usuario{
     private boolean gerente;//se true o tratador vira gerente
-    public Tratador(int ID,String login,String nome,String email,String endereco,String telefone,boolean gerente){
-        super(ID,login,nome,email,endereco,telefone,true);
+    public Tratador(int ID,long CPF,String login,String senha,String nome,String email,String cidade,String endereco,String telefone,boolean gerente){
+        super(ID,CPF,login,senha,nome,email,cidade,endereco,telefone,true);
         this.gerente=gerente;
     }
     public boolean isGerente() {

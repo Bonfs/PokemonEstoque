@@ -12,21 +12,29 @@ import com.sun.xml.wss.saml.AnyType;
  * @author matheus
  */
 public class Usuario {
+    private long CPF ;
     private boolean tratador=false;
     private int ID;
-    private String login, nome, email, endereco, telefone;
-    private String Esp;
+    private String login, nome, email, cidade, endereco, telefone;
     
-    public Usuario(int ID,String login,String nome,String email,String endereco,String telefone,boolean tratador){
+    public Usuario(int ID,long CPF,String login,String senha,String nome,String email,String cidade,String endereco,String telefone,boolean tratador){
         this.ID=ID;
         this.login=login;
         this.nome=nome;
         this.email=email;
+        this.cidade=cidade;
         this.endereco=endereco;
         this.telefone=telefone;
         this.tratador=tratador;
+        this.CPF=CPF;
     }
-    public boolean getTratador(){
+    public long getCPF() {
+        return CPF;
+    }
+    public String getCidade() {
+        return cidade;
+    }
+    public boolean isTratador(){
         return tratador;
     }
     public int getID() {

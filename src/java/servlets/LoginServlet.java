@@ -86,38 +86,38 @@ public class LoginServlet extends HttpServlet {
      */
     private boolean Login(String login,String pswd, HttpServletRequest request, HttpServletResponse response) throws IOException{
         boolean isLogged = false,tipo=false;
-        String Resultado="";
         ResultSet rs;
+        Access db = new Access();
+        
         Usuario User = null;
         Carrinho carrinho = null;
-        
-        
-        //Acessando o Banco de Dados
-        Access db = new Access();
         try {
             String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";//problema de acentuação
             rs = db.selectSQL(query);
             if(rs.next() && rs.getString("ID")!= null){
                 int ID = Integer.parseInt(rs.getString("ID"));
+                String senha = rs.getString("senha");
+                long CPF = Long.parseLong(rs.getString("CPF"));
                 login = rs.getString("login");
                 String nome = rs.getString("nome");
                 String email = rs.getString("email");
+                String cidade = rs.getString("cidade");
                 String endereco = rs.getString("endereco");
                 String telefone = rs.getString("telefone");
                 String tratador = rs.getString("tratador");
                 
                 if(tratador.equals("1")){
-                    query = "SELECT tipo FROM tratador WHERE tratador_id =" + ID ;//problema de acentuação
+                    query = "SELECT tipo FROM tratador WHERE tratador_id =" + ID ;
                     rs = db.selectSQL(query);
                     if(rs.next()){
-                        User = new Tratador(ID,login,nome,email,endereco,telefone,rs.getBoolean("tipo"));
+                        User = new Tratador(ID,CPF,login,senha,nome,email,cidade,endereco,telefone,rs.getBoolean("tipo"));
                     }
                     tipo=true;
                 }else{
-                    query = "SELECT nome_da_mae FROM treinador WHERE treinador_id =" + ID ;//problema de acentuação
+                    query = "SELECT nome_da_mae FROM treinador WHERE treinador_id =" + ID ;
                     rs = db.selectSQL(query);
                     if(rs.next()){
-                        User = new Treinador(ID,login,nome,email,endereco,telefone,rs.getString("nome_da_mae"));
+                        User = new Treinador(ID,CPF,login,senha,nome,email,cidade,endereco,telefone,rs.getString("nome_da_mae"));
                     }
                 }
                 db.connectionClose();
@@ -134,8 +134,8 @@ public class LoginServlet extends HttpServlet {
             HttpSession sessao = request.getSession();
             if(User != null){
                 sessao.setAttribute("User", User);
-                if(User.getTratador()){
-                    response.sendRedirect("telaInicial.jsp");
+                if(User.isTratador()){
+                    response.sendRedirect("PokeCenter_Perfil.jsp");
                 }else{
                     response.sendRedirect("PokeCenter_Loja.jsp");
                 }
@@ -151,6 +151,39 @@ public class LoginServlet extends HttpServlet {
             String login = request.getParameter("login");
             String pswd = request.getParameter("senha");
             Login(login,pswd,request,response);
+        }else if(request.getParameter("acao").equals("UpdateUser")){
+            ResultSet rs;
+            Access db = new Access();
+            int ID=Integer.parseInt(request.getParameter("ID"));
+            String CPF=request.getParameter("CPF");
+            String login=request.getParameter("login");
+            String nome=request.getParameter("nome");
+            String email=request.getParameter("email");
+            String cidade=request.getParameter("cidade");
+            String endereco=request.getParameter("endereco");
+            String telefone=request.getParameter("telefone");
+            String query ="UPDATE `usuario` SET `CPF`=\'"+CPF+"\',`login`=\'"+login+"\',`nome`=\'"+nome+"\',`email`=\'"+email+"\',`cidade`=\'"+cidade+"\',`endereco`=\'"+endereco+"\',`telefone`=\'"+telefone+"\' WHERE `ID`="+ID+";";
+            try {
+                db.insertSQL(query);
+            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(request.getParameter("nome_mae") != null){
+                String nome_mae=request.getParameter("nome_mae");
+                query ="UPDATE `treinador` SET `nome_da_mae`=\'"+nome_mae+"\' WHERE `trerinador_id`="+ID+";";
+            }else{
+                int gerente=(request.getParameter("gerente").charAt(0) == 'f')?0:1;
+                query ="UPDATE `Tratador` SET `tipo`=\'"+gerente+"\' WHERE `trtador_id`="+ID+";";
+            }
+            try {
+                db.insertSQL(query);
+            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            response.sendRedirect("home.jsp");
+        }else if(request.getParameter("acao").equals("CriaUser")){
+            //Create
+            response.sendRedirect("home.jsp");
         }
         
         
