@@ -41,7 +41,12 @@
                         <jsp:include page="header.jsp" >
                             <jsp:param name="Manter" value="True" />
                         </jsp:include>
-
+                        <%
+                            Usuario User = null;
+                            if(session.getAttribute("User") != null) {
+                                User = (Usuario) session.getAttribute("User");
+                            }
+                        %>
 			<div style="clear:both;"></div>
 
 			<div id="conteudo">
@@ -59,7 +64,7 @@
 							<h1> <%=produt.getNome()%> <br> R$ <%=produt.getPreco()%></h1>
 							<p><%=produt.getDescricao()%></p>
 
-							<form action="Venda" method="post" accept-charset="utf-8">
+                                                        <form action="<%if(User != null)out.print("Venda");else out.print("PokeCenter_Loja.jsp");%>" method="post" accept-charset="utf-8">
 								Quantidade: 
                                                                 <input type="hidden" name="acao" value="addProduto">
                                                                 <input type="hidden" name="ID" value="<%=produt.getID()%>">

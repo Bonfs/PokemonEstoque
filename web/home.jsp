@@ -10,15 +10,13 @@
 	<body>
             <% 
                 HttpSession sessao = request.getSession();
-                String login = "nhammm";
-                //Usuario User=null;
                 Usuario User = null;
                 
                 
                     if(session.getAttribute("User") != null) {
                         User = (Usuario) session.getAttribute("User");
                         if(User.isTratador()){
-                            response.sendRedirect("telaInicial.jsp");
+                            response.sendRedirect("PokeCenter_Perfil.jsp");
                         }else{
                             response.sendRedirect("PokeCenter_Loja.jsp");
                         }
@@ -26,13 +24,13 @@
             %>
 		<div id="container1">			
 			<div id="conteudo">
-				<div id="logo"><a href="home.jsp"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
+				<div id="logo"><a href="PokeCenter_Loja.jsp"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
 				<div id="linkloja_login">						
 					<div id ="linkLoja">
 						<div>
-							<a href="#"> <img src="img/sacola_pokecenter_branca.png" alt="Sacola do PokeCenter"> </a>
+							<a href="PokeCenter_Loja.jsp"> <img src="img/sacola_pokecenter_branca.png" alt="Sacola do PokeCenter"> </a>
 						</div>
-						<p><a href="#"> ACESSE NOSSA LOJA </a></p>
+						<p><a href="PokeCenter_Loja.jsp"> ACESSE NOSSA LOJA </a></p>
 					</div>
 					<div id="login">
 						<form action="LoginServlet" method="post">
@@ -46,7 +44,7 @@
 							<input type="submit" name="acao" value="ENTRAR" class="botao">
 						</form>
 						<p><a href="#"> ESQUECEU SUA SENHA? </a></p>
-						<p><a href="cadastro_treinador.html"> CADASTRE-SE </a></p>
+						<p><a href="cadastro.jsp"> CADASTRE-SE </a></p>
 					</div>
 				</div>
 			</div>

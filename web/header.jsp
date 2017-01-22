@@ -19,9 +19,9 @@
                             <%}else if(User != null && User.isTratador()){
                                 if(((Tratador) User).isGerente()){%>
                                     <li><a href="cadastro.jsp"> Cadastrar Tratador </a></li>
-                                    <li><a href="PokeCenter_Tratador_Lista.html"> Tratadores </a></li>
+                                    <li><a href="PokeCenter_Tratador_Lista.jsp"> Tratadores </a></li>
                                     <li><a href="PokeCenter_Tratador_Estoque.jsp">Estoque</a></li>
-                                    <li><a href="PokeCenter_Tratador_Vendas.html">Vendas</a></li>
+                                    <li><a href="PokeCenter_Tratador_Vendas.jsp">Vendas</a></li>
                                 <%}%>
                                 <li><a href="#">Troca</a></li>
                             <%}%>

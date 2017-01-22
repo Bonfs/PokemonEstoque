@@ -48,7 +48,7 @@
 
 					<div class="icon_editar">
 						<ul>
-							<a href="#">
+							<a href="cadastro.jsp">
 							<li><img src="img/editar.png"></li>
 							<li>Alterar</li>
 							</a>

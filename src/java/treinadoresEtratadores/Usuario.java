@@ -15,11 +15,12 @@ public class Usuario {
     private long CPF ;
     private boolean tratador=false;
     private int ID;
-    private String login, nome, email, cidade, endereco, telefone;
+    private String login,senha, nome, email, cidade, endereco, telefone;
     
     public Usuario(int ID,long CPF,String login,String senha,String nome,String email,String cidade,String endereco,String telefone,boolean tratador){
         this.ID=ID;
         this.login=login;
+        this.senha=senha;
         this.nome=nome;
         this.email=email;
         this.cidade=cidade;
@@ -27,6 +28,9 @@ public class Usuario {
         this.telefone=telefone;
         this.tratador=tratador;
         this.CPF=CPF;
+    }
+    public String getPswd(){
+        return senha;
     }
     public long getCPF() {
         return CPF;

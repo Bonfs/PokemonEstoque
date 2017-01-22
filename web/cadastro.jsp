@@ -12,7 +12,9 @@
                     boolean Existia = false;
                     int Alter = -1;
                     Usuario Perfil = new Usuario(0,0,"","","","","","","",false);
+                    Usuario User = null;
                     if(session != null && session.getAttribute("User") != null ) {
+                        User = (Usuario) session.getAttribute("User");
                         if(session.getAttribute("Alter") != null ){
                             Alter = Integer.parseInt(session.getAttribute("Alter").toString());
                             if(Alter != 0){
@@ -54,7 +56,7 @@
                             }
                         }else{
                             Existia = true;
-                            Perfil = (Usuario) session.getAttribute("User");        
+                            Perfil = User;        
                         }
                         
                     }
@@ -86,25 +88,29 @@
                             console.log("CPF Invalido");
                             return false;
                         }
-                        var login=document.getElementsByName("login")[0].value;
-                        var senha=document.getElementsByName("senha")[0].value;
+                        
+                        
                         var nome=document.getElementsByName("nome")[0].value;
                         var email=document.getElementsByName("email")[0].value;
                         var cidade=document.getElementsByName("cidade")[0].value;
                         var endereco=document.getElementsByName("endereco")[0].value;
                         var telefone=document.getElementsByName("telefone")[0].value;
-                        
                         if(<%=Existia%>){
                             var ID=<%=Perfil.getID()%>;
                             if(<%=Perfil.isTratador()%>)
-                            post("LoginServlet",{acao:'UpdateUser',ID:ID,CPF:CPF,login:login,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].value},"post");
+                                <%if(User != null && ((Tratador) User).isGerente())
+                                    out.print("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].value},\"post\");");
+                                else
+                                   out.print("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:\'"+false+"\'},\"post\");");%>
                             else
-                            post("LoginServlet",{acao:'UpdateUser',ID:ID,CPF:CPF,login:login,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("nome_mae")[0].value},"post");
+                                post("LoginServlet",{acao:'UpdateUser',ID:ID,CPF:CPF,login:'<%=Perfil.getLogin()%>',senha:'<%=Perfil.getPswd()%>',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("nome_mae")[0].value},"post");
                         }else{
+                            var login=document.getElementsByName("nome")[0].value;
+                            var senha=document.getElementsByName("email")[0].value;
                             if(Alter==0)
-                                post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].value},"post");
+                                post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].value},"post");
                             else
-                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("nome_mae")[0].value},"post");
+                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("nome_mae")[0].value},"post");
                         }
                     }
                     
@@ -142,15 +148,17 @@
 							<%if(!Perfil.isTratador()){%>
 							<div class="legenda">NOME DA MÃE:</div>
 							<input type="text" name="nome_mae" value="<%=Perfil.getNome()%>"><br>
-                                                        <%}%>
+                                                        <%}
+                                                        if(!Existia){%>
 							<div class="legenda">LOGIN:</div>
 							<input type="text" name="login" value="<%=Perfil.getLogin()%>"><br>
 							<div class="legenda">SENHA:</div>
 							<input type="password" name="senha" value=""><br><br>
-                                                        <% if(Perfil.isTratador() && (((Tratador) Perfil).isGerente())){%>
+                                                        <%}
+                                                        if(Perfil.isTratador() && (((Tratador) Perfil).isGerente())){%>
                                                         <input type="checkbox" name="gerente" value="<%=Perfil.getNome()%>">  Cadastrar como Gerente <br><br><br>
                                                         <%}%>
-							<input  value="CADASTRAR" class="botao" onclick="Submit()">
+                                                        <input  value="<%if(Existia)out.print("ALTERAR");else out.print("CADASTRO");%>" class="botao" onclick="Submit()">
 						</form>
 					</div>
 				</div>

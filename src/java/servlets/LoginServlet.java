@@ -93,6 +93,7 @@ public class LoginServlet extends HttpServlet {
         Carrinho carrinho = null;
         try {
             String query = "SELECT * FROM usuario WHERE login =\'" + login + "\' AND senha =\'"+ pswd+"\'";//problema de acentuação
+            System.out.println(query);
             rs = db.selectSQL(query);
             if(rs.next() && rs.getString("ID")!= null){
                 int ID = Integer.parseInt(rs.getString("ID"));
@@ -121,48 +122,46 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
                 db.connectionClose();
-                
-                isLogged = true;
+                HttpSession sessao = request.getSession();
+                sessao.setAttribute("User", User);
             }else{
-                response.sendRedirect("home.jsp");
                 return false;
             }
             //Resultado = query;
         } catch (SQLException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } finally{
-            HttpSession sessao = request.getSession();
-            if(User != null){
-                sessao.setAttribute("User", User);
-                if(User.isTratador()){
-                    response.sendRedirect("PokeCenter_Perfil.jsp");
-                }else{
-                    response.sendRedirect("PokeCenter_Loja.jsp");
-                }
-            } 
-            
-            
         }
-        return isLogged;
+        return true;
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(request.getParameter("acao").equals("ENTRAR")) {
             String login = request.getParameter("login");
             String pswd = request.getParameter("senha");
-            Login(login,pswd,request,response);
+            if(Login(login,pswd,request,response)){
+                HttpSession sessao = request.getSession();
+                Usuario User =(Usuario) sessao.getAttribute("User");
+                if(User.isTratador()){
+                    response.sendRedirect("PokeCenter_Perfil.jsp");
+                }else{
+                    response.sendRedirect("PokeCenter_Loja.jsp");
+                }
+            }else{
+                response.sendRedirect("home.jsp");
+            }
         }else if(request.getParameter("acao").equals("UpdateUser")){
             ResultSet rs;
             Access db = new Access();
             int ID=Integer.parseInt(request.getParameter("ID"));
             String CPF=request.getParameter("CPF");
             String login=request.getParameter("login");
+            String senha=request.getParameter("senha");
             String nome=request.getParameter("nome");
             String email=request.getParameter("email");
             String cidade=request.getParameter("cidade");
             String endereco=request.getParameter("endereco");
             String telefone=request.getParameter("telefone");
-            String query ="UPDATE `usuario` SET `CPF`=\'"+CPF+"\',`login`=\'"+login+"\',`nome`=\'"+nome+"\',`email`=\'"+email+"\',`cidade`=\'"+cidade+"\',`endereco`=\'"+endereco+"\',`telefone`=\'"+telefone+"\' WHERE `ID`="+ID+";";
+            String query ="UPDATE `usuario` SET `CPF`=\'"+CPF+"\',`nome`=\'"+nome+"\',`email`=\'"+email+"\',`cidade`=\'"+cidade+"\',`endereco`=\'"+endereco+"\',`telefone`=\'"+telefone+"\' WHERE `ID`="+ID+";";
             try {
                 db.insertSQL(query);
             } catch (SQLException | IllegalAccessException | InstantiationException ex) {
@@ -180,7 +179,13 @@ public class LoginServlet extends HttpServlet {
             } catch (SQLException | IllegalAccessException | InstantiationException ex) {
                 Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            response.sendRedirect("home.jsp");
+            /*HttpSession sessao = request.getSession();
+            sessao.invalidate();*/
+            if(Login(login,senha,request,response)){
+                response.sendRedirect("PokeCenter_Perfil.jsp");
+            }else{
+                response.sendRedirect("home.jsp");
+            }
         }else if(request.getParameter("acao").equals("CriaUser")){
             //Create
             response.sendRedirect("home.jsp");
