@@ -8,6 +8,13 @@
             request.getRequestDispatcher("home.jsp").forward(request,response);
         }
     %>
+    <script src="js/PostMethod.js"></script>
+    <script>
+        function Cadastrar_Tratador(){
+            post("cadastro.jsp",{Alter:-1});
+        }
+        
+    </script>
     <div id="menu_topo">
             <div id="logo_lj"><a href="PokeCenter_Loja.jsp"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
             <nav id="menuSite">
@@ -18,7 +25,7 @@
                             <li><a href="#">Fale Conosco</a></li>
                             <%}else if(User != null && User.isTratador()){
                                 if(((Tratador) User).isGerente()){%>
-                                    <li><a href="cadastro.jsp"> Cadastrar Tratador </a></li>
+                                    <li><a href="#" onclick="Cadastrar_Tratador()"> Cadastrar Tratador </a></li>
                                     <li><a href="PokeCenter_Tratador_Lista.jsp"> Tratadores </a></li>
                                     <li><a href="PokeCenter_Tratador_Estoque.jsp">Estoque</a></li>
                                     <li><a href="PokeCenter_Tratador_Vendas.jsp">Vendas</a></li>
@@ -31,7 +38,7 @@
             </nav>
             <nav id="menuUser">
                     <ul>
-                            <li><a href="PokeCenter_Loja_Carrinho.jsp"><%if(User != null && !User.isTratador()){out.print(((Treinador) User).getCarrinho().getQuantidade());}%><img src="img/sacola_pokecenter_branca.png"></a></li>
+                            <%if(User != null && !User.isTratador()){out.print("<li><a href=\"PokeCenter_Loja_Carrinho.jsp\">"+((Treinador) User).getCarrinho().getQuantidade()+"<img src=\"img/sacola_pokecenter_branca.png\"></a></li>");}%>
                             <%if(User == null) {%>
                             <li><a href="home.jsp">Login</a></li>
                             <%}else{%>

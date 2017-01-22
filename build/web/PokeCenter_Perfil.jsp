@@ -42,7 +42,7 @@
                                                         <li>CPF:<span> <%=User.getCPF()%></span></li>
 							<li>Telefone:<span> <%=User.getTelefone()%></span></li>
                                                         <li>Cidade:<span> <%=User.getCidade()%></span></li>
-							<li>Endereço:<span> <%=User.getTelefone()%></span></li>
+							<li>Endereço:<span> <%=User.getEndereco()%></span></li>
 						</ul>
 					</div>
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import servlets.LoginServlet;
 
 public class Access {
     private Connection connection = null;
@@ -101,7 +102,15 @@ public class Access {
         }
         return sb;
     }
-
+    public boolean isReady() {
+        try{
+            return statement.isClosed();
+        }catch(SQLException ex){
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            return true;
+        }
+        
+    }
     public ResultSet selectSQL(String query) throws SQLException, IllegalAccessException, InstantiationException {    
             ResultSet rs = null;
             rs = statement.executeQuery(query);
@@ -110,8 +119,10 @@ public class Access {
     }
     public ResultSet insertSQL(String query) throws SQLException, IllegalAccessException, InstantiationException {    
             ResultSet rs = null;
+            
             statement.executeUpdate(query);
             rs = statement.executeQuery("SELECT last_insert_rowid() as ID;");
+            statement.close();
             return rs;
     }
        

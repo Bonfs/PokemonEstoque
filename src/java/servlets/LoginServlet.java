@@ -135,12 +135,14 @@ public class LoginServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession sessao = request.getSession();
+        Usuario User =(Usuario) sessao.getAttribute("User");
+        
         if(request.getParameter("acao").equals("ENTRAR")) {
             String login = request.getParameter("login");
             String pswd = request.getParameter("senha");
             if(Login(login,pswd,request,response)){
-                HttpSession sessao = request.getSession();
-                Usuario User =(Usuario) sessao.getAttribute("User");
+                User =(Usuario) sessao.getAttribute("User");
                 if(User.isTratador()){
                     response.sendRedirect("PokeCenter_Perfil.jsp");
                 }else{
@@ -150,6 +152,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("home.jsp");
             }
         }else if(request.getParameter("acao").equals("UpdateUser")){
+            System.out.print("Update User Data");
             ResultSet rs;
             Access db = new Access();
             int ID=Integer.parseInt(request.getParameter("ID"));
@@ -162,17 +165,22 @@ public class LoginServlet extends HttpServlet {
             String endereco=request.getParameter("endereco");
             String telefone=request.getParameter("telefone");
             String query ="UPDATE `usuario` SET `CPF`=\'"+CPF+"\',`nome`=\'"+nome+"\',`email`=\'"+email+"\',`cidade`=\'"+cidade+"\',`endereco`=\'"+endereco+"\',`telefone`=\'"+telefone+"\' WHERE `ID`="+ID+";";
+            System.out.println("Antes de Entrar"+query);
             try {
                 db.insertSQL(query);
+                ////while(!db.isReady()){System.out.println(db.isReady());}
+                //System.out.println(db.isReady());
             } catch (SQLException | IllegalAccessException | InstantiationException ex) {
                 Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             if(request.getParameter("nome_mae") != null){
                 String nome_mae=request.getParameter("nome_mae");
-                query ="UPDATE `treinador` SET `nome_da_mae`=\'"+nome_mae+"\' WHERE `trerinador_id`="+ID+";";
+                query ="UPDATE `treinador` SET `nome_da_mae`=\'"+nome_mae+"\' WHERE `treinador_id`="+ID+";";
             }else{
-                int gerente=(request.getParameter("gerente").charAt(0) == 'f')?0:1;
-                query ="UPDATE `Tratador` SET `tipo`=\'"+gerente+"\' WHERE `trtador_id`="+ID+";";
+                int gerente=(request.getParameter("gerente").equals("true"))?1:0;
+                System.out.print(ID+":"+request.getParameter("gerente")+gerente);
+                query ="UPDATE `tratador` SET `tipo`="+gerente+" WHERE `tratador_id`="+ID+";";
+                System.out.print(ID+":"+request.getParameter("gerente")+gerente);
             }
             try {
                 db.insertSQL(query);
@@ -182,6 +190,10 @@ public class LoginServlet extends HttpServlet {
             /*HttpSession sessao = request.getSession();
             sessao.invalidate();*/
             db.connectionClose();
+            if(User != null){
+                login = User.getLogin();
+                senha = User.getPswd();
+            }
             if(Login(login,senha,request,response)){
                 response.sendRedirect("PokeCenter_Perfil.jsp");
             }else{
@@ -221,6 +233,7 @@ public class LoginServlet extends HttpServlet {
                     }else{
                         System.out.print(ID+" é Tratador");
                         int gerente=(request.getParameter("gerente").charAt(0) == 'f')?0:1;
+                        System.out.print(ID+" é gerente?"+gerente);
                         query="INSERT INTO tratador (`tipo`,`tratador_id`) Values("+gerente+","+ID+")";
                     }
                     db.insertSQL(query);

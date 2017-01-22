@@ -10,24 +10,27 @@
 		<link rel="stylesheet" type="text/css" href="css/estilo.css">
                 <% 
                     boolean Existia = false;
-                    int Alter = -1;
-                    Usuario Perfil = new Usuario(0,0,"","","","","","","",false);
+                    int Alter = 0;
+                    Usuario Perfil = null;
                     Usuario User = null;
+                    
+                    System.out.println(request.getParameter("Alter"));
                     if(session != null && session.getAttribute("User") != null ) {
                         User = (Usuario) session.getAttribute("User");
-                        if(session.getAttribute("Alter") != null ){
-                            Alter = Integer.parseInt(session.getAttribute("Alter").toString());
-                            if(Alter != 0){
+                        if(User.isTratador() && request.getParameter("Alter") != null ){
+                            Alter = Integer.parseInt(request.getParameter("Alter"));
+                            if(Alter > 0){
                                 Existia = true;
                                 Access db = new Access();
                                 session.setAttribute("Alter",null);
                                 boolean isLogged = false,tipo=false;
                                 ResultSet rs;
-                                String query = "SELECT * FROM usuario WHERE ID =\'"+Alter;
+                                String query = "SELECT * FROM usuario WHERE ID ="+Alter;
+                                System.out.println(query);
                                 rs = db.selectSQL(query);
                                 if(rs.next()){
                                     int ID = Integer.parseInt(rs.getString("ID"));
-                                    int CPF = Integer.parseInt(rs.getString("CPF"));
+                                    long CPF = Long.parseLong(rs.getString("CPF"));
                                     String login = rs.getString("login");
                                     String nome = rs.getString("nome");
                                     String senha = rs.getString("senha");
@@ -38,14 +41,14 @@
                                     String trat = rs.getString("tratador");
 
                                     if(trat.equals("1")){
-                                        query = "SELECT tipo FROM tratador WHERE tratador_id =" + ID ;//problema de acentuação
+                                        query = "SELECT tipo FROM tratador WHERE tratador_id =" + ID ;
                                         rs = db.selectSQL(query);
                                         if(rs.next()){
                                             Perfil = new Tratador(ID,CPF,login,senha,nome,email,cidade,endereco,telefone,rs.getBoolean("tipo"));
                                         }
                                         tipo=true;
                                     }else{
-                                        query = "SELECT nome_da_mae FROM treinador WHERE treinador_id =" + ID ;//problema de acentuação
+                                        query = "SELECT nome_da_mae FROM treinador WHERE treinador_id =" + ID ;
                                         rs = db.selectSQL(query);
                                         if(rs.next()){
                                             Perfil = new Treinador(ID,CPF,login,senha,nome,email,cidade,endereco,telefone,rs.getString("nome_da_mae"));
@@ -53,13 +56,18 @@
                                     }
                                     db.connectionClose();
                                 } 
+                            }else if(Alter == 0){
+                                Perfil=User;
+                            }else{
+                                Perfil = new Tratador(0,0,"","","","","","","",false);
                             }
                         }else{
                             Existia = true;
                             Perfil = User;        
                         }
-                        
                     }
+                    if(Perfil == null)
+                          Perfil = new Treinador(0,0,"","","","","","","","");
                 %>
                  <title>Cadastro <%if(Perfil.isTratador()){
                     out.print("Tratador");
@@ -97,18 +105,19 @@
                         var telefone=document.getElementsByName("telefone")[0].value;
                         if(<%=Existia%>){
                             var ID=<%=Perfil.getID()%>;
-                            if(<%=Perfil.isTratador()%>)
-                                <%if(User != null && ((Tratador) User).isGerente())
-                                    out.print("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].value},\"post\");");
+                            if(<%=Perfil.isTratador()%>){
+                                <%if(User.isTratador() && ((Tratador) User).isGerente())
+                                if(true)
+                                    out.print("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].checked},\"post\");");
                                 else
                                    out.print("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:\'"+false+"\'},\"post\");");%>
-                            else
-                                post("LoginServlet",{acao:'UpdateUser',ID:ID,CPF:CPF,login:'<%=Perfil.getLogin()%>',senha:'<%=Perfil.getPswd()%>',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("nome_mae")[0].value},"post");
+                            }else
+                                post("LoginServlet",{acao:'UpdateUser',ID:ID,CPF:CPF,login:'<%=Perfil.getLogin()%>',senha:'<%=Perfil.getPswd()%>',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName("nome_mae")[0].value},"post");
                         }else{
                             var login=document.getElementsByName("login")[0].value;
                             var senha=document.getElementsByName("senha")[0].value;
-                            if(<%=Alter%>==0)
-                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].value},"post");
+                            if(<%=Alter%>==-1)
+                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].checked},"post");
                             else
                                post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName("nome_mae")[0].value},"post");
                         }
@@ -132,7 +141,7 @@
 							<input type="text" name="cpf" value="<%if(Perfil.getCPF()!=0)out.print(Perfil.getCPF());%>"><br>
                                                         
 							<div class="legenda">EMAIL:</div>
-							<input type="text" name="email" value="<%=Perfil.getNome()%>"><br>
+							<input type="text" name="email" value="<%=Perfil.getEmail()%>"><br>
 
 							<div class="legenda">CIDADE:</div>
 							<input type="text" name="cidade" value="<%=Perfil.getCidade()%>"><br>
@@ -147,7 +156,7 @@
 							<input type="text" name="telefone" value="<%=Perfil.getTelefone()%>"><br>
 							<%if(!Perfil.isTratador()){%>
 							<div class="legenda">NOME DA MÃE:</div>
-							<input type="text" name="nome_mae" value="<%=Perfil.getNome()%>"><br>
+							<input type="text" name="nome_mae" value="<%=((Treinador) Perfil).getNomeDaMae()%>"><br>
                                                         <%}
                                                         if(!Existia){%>
 							<div class="legenda">LOGIN:</div>
@@ -155,7 +164,7 @@
 							<div class="legenda">SENHA:</div>
 							<input type="password" name="senha" value=""><br><br>
                                                         <%}
-                                                        if(Perfil.isTratador() && (((Tratador) Perfil).isGerente())){%>
+                                                        if(Perfil.isTratador() && (((Tratador) User).isGerente())){%>
                                                         <input type="checkbox" name="gerente" value="<%=Perfil.getNome()%>">  Cadastrar como Gerente <br><br><br>
                                                         <%}%>
                                                         <input  value="<%if(Existia)out.print("ALTERAR");else out.print("CADASTRO");%>" class="botao" onclick="Submit()">
