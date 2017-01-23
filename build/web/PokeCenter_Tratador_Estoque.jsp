@@ -39,7 +39,7 @@
 						<ul>
 							<li> <div class="produto_estoque_img"> <img src="img/<%=produto.getImgPath()%> "> </div> </li>
 							<li> <%=produto.getNome()%> </li>
-							<li> <%=produto.getPreco()%> </li>
+							<li>R$ <%=produto.getPrecoString()%> </li>
 							<li> <%=estoque.getQuantidade(counter)%> </li>
 						</ul>
 					</div>

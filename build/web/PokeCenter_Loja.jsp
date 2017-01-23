@@ -22,7 +22,7 @@
                 <%
                     Estoque estoque = new Estoque();
                 %>
-                
+                <script src="js/Convert.js"></script>
 	</head>
 	<body>
 		<div id="container3">
@@ -44,7 +44,7 @@
                                         %>
 					<div id="Produto_<%=produto.getID()%>" class="produto">
 						<div> <a href="PokeCenter_Loja_Produto.jsp?ID=<%=produto.getID()%>"><img src="img/<%=produto.getImgPath()%>"></a> </div>
-						<div> <a href="PokeCenter_Loja_Produto.jsp?ID=<%=produto.getID()%>"><p> <%=produto.getNome()%> <br> <%=produto.getPreco()%> </p></a> </div>
+						<div> <a href="PokeCenter_Loja_Produto.jsp?ID=<%=produto.getID()%>"><p> <%=produto.getNome()%> <br>R$ <%=produto.getPrecoString()%> </p></a> </div>
 					</div>
                                         <%}
                                             counter++;

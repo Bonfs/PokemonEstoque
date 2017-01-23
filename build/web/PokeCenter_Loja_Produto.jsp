@@ -67,7 +67,7 @@
 					</div>
 					<div id="coluna2"> 
 						<div class=""> 
-							<h1> <%=produt.getNome()%> <br> R$ <%=produt.getPreco()%></h1>
+							<h1> <%=produt.getNome()%> <br> R$ <%=produt.getPrecoString()%></h1>
 							<p><%=produt.getDescricao()%></p>
 
                                                         <form action="<%if(User != null)out.print("Venda");else out.print("PokeCenter_Loja.jsp");%>" method="post" accept-charset="utf-8">

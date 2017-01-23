@@ -97,8 +97,6 @@
                             console.log("CPF invalido");
                             return false;
                         }
-                        
-                        
                         var nome=document.getElementsByName("nome")[0].value;
                         var email=document.getElementsByName("email")[0].value;
                         var cidade=document.getElementsByName("cidade")[0].value;

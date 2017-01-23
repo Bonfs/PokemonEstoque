@@ -1,3 +1,4 @@
+<%@page import="Itens.Produto"%>
 <%@page import="vendas.VendaProduto"%>
 <%@page import="treinadoresEtratadores.Tratador"%>
 <%@page import="treinadoresEtratadores.Treinador"%>
@@ -73,8 +74,8 @@
 						</div>
 
 						<div class="col3_elemento_carrinho">
-							<div>Unidade: R$ <%=produt.getProduto().getPreco()%></div>
-							<div>SubTotal: R$ <%=produt.getProduto().getPreco()*produt.getQuantidade()%></div>
+							<div>Unidade: R$ <%=produt.getProduto().getPrecoString()%></div>
+							<div>SubTotal: R$ <%=produt.getProduto().getPrecoString(produt.getProduto().getPreco()*produt.getQuantidade())%></div>
                                                         <%Total+=produt.getProduto().getPreco()*produt.getQuantidade();%>
                                                 </div>
 					</div>
@@ -84,7 +85,7 @@
                                         <%counter++;}}%>
 					
 					<div id="baseCarrinho">
-						<div class="col1_carrinho"> <h3>Total: R$<%=Total%></h3> </div>
+						<div class="col1_carrinho"> <h3>Total: R$<%=new Produto().getPrecoString(Total)%></h3> </div>
                                                 <div class="col2_carrinho" onclick="Finaliza()"> <div class="botao_null">FINALIZAR COMPRA</div> </div>
 					</div> 
 
