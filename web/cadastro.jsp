@@ -14,7 +14,7 @@
                     Usuario Perfil = null;
                     Usuario User = null;
                     
-                    System.out.println(request.getParameter("Alter"));
+                    //System.out.println(request.getParameter("Alter"));
                     if(session != null && session.getAttribute("User") != null ) {
                         User = (Usuario) session.getAttribute("User");
                         if(User.isTratador() && request.getParameter("Alter") != null ){
@@ -102,24 +102,22 @@
                         var cidade=document.getElementsByName("cidade")[0].value;
                         var endereco=document.getElementsByName("endereco")[0].value;
                         var telefone=document.getElementsByName("telefone")[0].value;
-                        if(<%=Existia%>){
-                            var ID=<%=Perfil.getID()%>;
-                            if(<%=Perfil.isTratador()%>){
-                                <%if(User.isTratador() && ((Tratador) User).isGerente())
-                                if(true)
-                                    out.print("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].checked},\"post\");");
+                        <%if(Existia){
+                            out.println("var ID="+Perfil.getID()+";");
+                            if(Perfil.isTratador()){
+                                if(User != null && User.isTratador() && ((Tratador) User).isGerente())
+                                    out.println("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].checked},\"post\");");
                                 else
-                                   out.print("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:\'"+false+"\'},\"post\");");%>
+                                   out.println("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:\'"+false+"\'},\"post\");");
                             }else
-                                post("LoginServlet",{acao:'UpdateUser',ID:ID,CPF:CPF,login:'<%=Perfil.getLogin()%>',senha:'<%=Perfil.getPswd()%>',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName("nome_mae")[0].value},"post");
+                                out.println("post(\"LoginServlet\",{acao:\'UpdateUser\',ID:ID,CPF:CPF,login:\'"+Perfil.getLogin()+"\',senha:\'"+Perfil.getPswd()+"\',nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName(\"nome_mae\")[0].value},\"post\");");
                         }else{
-                            var login=document.getElementsByName("login")[0].value;
-                            var senha=document.getElementsByName("senha")[0].value;
-                            if(<%=Alter%>==-1)
-                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName("gerente")[0].checked},"post");
+                            out.println("var login=document.getElementsByName(\"login\")[0].value;var senha=document.getElementsByName(\"senha\")[0].value;");
+                            if(Alter==-1)
+                               out.println("post(\"LoginServlet\",{acao:\'CriaUser\',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].checked},\"post\");");
                             else
-                               post("LoginServlet",{acao:'CriaUser',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName("nome_mae")[0].value},"post");
-                        }
+                               out.println("post(\"LoginServlet\",{acao:\'CriaUser\',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName(\"nome_mae\")[0].value},\"post\");");
+                        }%>
                     }
                     
                 </script>
@@ -163,10 +161,11 @@
 							<div class="legenda">SENHA:</div>
 							<input type="password" name="senha" value=""><br><br>
                                                         <%}
-                                                        if(Perfil.isTratador() && (((Tratador) User).isGerente())){%>
-                                                        <input type="checkbox" name="gerente" value="<%=Perfil.getNome()%>">  Cadastrar como Gerente <br><br><br>
-                                                        <%}%>
-                                                        <input  value="<%if(Existia)out.print("ALTERAR");else out.print("CADASTRO");%>" class="botao" onclick="Submit()">
+                                                        if(Perfil.isTratador() && (((Tratador) User).isGerente())){
+                                                            out.print("<input type=\"checkbox\" name=\"gerente\" checked=\""+((Tratador) Perfil).isGerente()+"\">  Cadastrar como Gerente <br><br><br>");
+                                                        }
+                                                        %>
+                                                        <input value="<%out.print((Existia)?"ALTERAR":"CADASTRO");%>" class="botao" onclick="Submit()" >
 						</form>
 					</div>
 				</div>

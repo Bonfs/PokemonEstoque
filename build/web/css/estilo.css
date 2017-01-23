@@ -267,9 +267,7 @@ input[name="quantidade"]{
 .col3_elemento_carrinho{ float: left; width: 20%;}
 .col2_elemento_carrinho li{display: inline-block; margin-right: 20px;}
 .icon_lixeira{ float: left; width: 20px;}
-.col3_elemento_carrinho div{
-	margin-top: 30px;
-}
+.col3_elemento_carrinho div{ margin-top: 30px; }
 
 #baseCarrinho{
 	width: 100%;
@@ -283,9 +281,7 @@ input[name="quantidade"]{
 	text-align: center;
 }
 
-#Informacoes ul li{
-	margin-bottom: 15px;
-}
+#Informacoes ul li{ margin-bottom: 15px; }
 
 #Informacoes{
 	float: left;
@@ -297,22 +293,20 @@ input[name="quantidade"]{
 	width: 10%;
 }
 
-.icon_editar li{
-	float: left;
-}
+.icon_editar li{ float: left; }
 
-.tratador, .produto_estoque{
+.tratador, .produto_estoque, .pokemon{
 	padding: 10px 0px 6px;
 	border-bottom: 1px solid #c3c3c3; 
 }
 
-.tratador ul li, .produto_estoque ul li{
+.tratador ul li, .produto_estoque ul li, .pokemon ul li{
 	display: inline-block;
 	margin: 0px 50px 0px 0px;
 }
 .icon{
-width: 22px;
-float: left;
+	width: 22px;
+	float: left;
 }
 
 .produto_estoque_img{
@@ -330,12 +324,36 @@ float: left;
 	border: 1px solid #c3c3c3;
 }
 
-.venda_feita > ul > li{
-	margin-top: 5px; 
-}
+.venda_feita > ul > li{ margin-top: 5px; }
 
 .venda_feita ul li ul li {
 	display: inline-block;
 	margin-right: 15px; 
 }
 
+.col-troca01{
+	width: 33%; 
+	float: left; 
+	padding: 0px 5%; 
+	font-size: 1.2rem;
+}.col-troca01 select{ font-size: 1rem;}
+
+.col-troca02{
+	width: calc(10% - 2px); 
+	float: left; 
+	padding: 2%; 
+	font-size: 1.2rem; 
+	text-align: center; 
+	border:1px solid #6f6f6f; 
+	border-radius: 10%;
+}.col-troca02 div {
+	width: 50px;
+	margin: 0px auto;
+}
+
+.col-troca03{
+	width: 33%; 
+	float: left; 
+	padding: 0px 5%; 
+	font-size: 1.2rem;
+}.col-troca03 select{ font-size: 1rem;}
