@@ -28,6 +28,7 @@
 		<div id="container3">
                     <jsp:include page="header.jsp" >
                         <jsp:param name="Manter" value="True" />
+                        <jsp:param name="Loja" value="True" />
                     </jsp:include>
 			<div style="clear:both;"></div>
 

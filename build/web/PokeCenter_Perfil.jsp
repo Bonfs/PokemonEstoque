@@ -36,13 +36,13 @@
 						<h2>Perfil</h2>
 						<ul>
 							<li>Nome:<span> <%=User.getNome()%></span></li>
-                                                        <%if(User.isTratador())
-							out.print("<li>CPF:<span> "+((Tratador) User).getCPF()+"</span></li>");%>
 							<li>Email:<span> <%=User.getEmail()%></span></li>
                                                         <li>CPF:<span> <%=User.getCPF()%></span></li>
 							<li>Telefone:<span> <%=User.getTelefone()%></span></li>
                                                         <li>Cidade:<span> <%=User.getCidade()%></span></li>
 							<li>Endereço:<span> <%=User.getEndereco()%></span></li>
+                                                        <%if(!User.isTratador())
+							out.print("<li>Nome da Mãe:<span> "+((Treinador) User).getNomeDaMae()+"</span></li>");%>
 						</ul>
 					</div>
 
