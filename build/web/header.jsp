@@ -1,15 +1,15 @@
 <%@page import="treinadoresEtratadores.*"%>
 <header>
     <%
-        boolean Loja = true;
+        boolean Loja = false;
         Usuario User = null;
         if(session.getAttribute("User") != null) {
             User = (Usuario) session.getAttribute("User");
-        }else if(!request.getParameter("Manter").equals("True")){
+        }else if(request.getParameter("Manter") != null && !request.getParameter("Manter").equals("True")){
             request.getRequestDispatcher("home.jsp").forward(request,response);
         }
-        if(!request.getParameter("Manter").equals("True")){
-            Loja = false;
+        if(request.getParameter("Loja") != null && request.getParameter("Loja").equals("True")){
+            Loja = true;
         }
         
     %>
@@ -30,8 +30,8 @@
                             <li><a href="#">Central de Ajuda</a></li>
                             <li><a href="#">Fale Conosco</a></li>
                             <%  }else{%>
-                            <li><a href="cadastro_pokemon.html"> Cadastrar Pokemon </a></li>
-                            <li><a href="PokeCenter_Estoque_Pokemons.html"> Seus Pokemons </a></li>
+                            <li><a href="cadastro_pokemon.jsp"> Cadastrar Pokemon </a></li>
+                            <li><a href="PokeCenter_Treinador_Pokemons.jsp"> Seus Pokemons </a></li>
                             <li><a href="#">Doação</a></li>
                             <%  }
                             }else if(User != null && User.isTratador()){

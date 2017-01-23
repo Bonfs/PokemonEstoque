@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
@@ -7,24 +8,11 @@
 	</head>
 	<body>
 		<div id="container3">			
-			<header>
-				<div id="menu_topo">
-					<div id="logo_lj"><a href="PokeCenter_Treinador_Perfil.html"><img src="img/logo_pokecenter_branca.png" alt="PokeCenter logo"></a></div>
-					<nav id="menuSite">
-						<ul>
-							<li><a href="cadastro_pokemon.html"> Cadastrar Pokemon </a></li>
-							<li><a href="PokeCenter_Treinador_Pokemons.html"> Seus Pokemons </a></li>
-							<li><a href="#">Doação</a></li>
-						</ul>
-					</nav>
-					<nav id="menuUser">
-						<ul style="margin-top: 35px;">
-							<li><a href="PokeCenter_Treinador_Perfil.html">Nome Usuario</a></li>
-							<li><a href="#">Sair</a></li>
-						</ul>
-					</nav>
-				</div>	
-			</header>
+                    <jsp:include page="header.jsp" >
+                        <jsp:param name="Manter" value="false" />
+                        <jsp:param name="Loja" value="false" />
+                    </jsp:include>
+                    
 
 			<div style="clear:both;"></div>
 
@@ -76,18 +64,7 @@
 
 			<div style="clear:both;"></div>
 			
-			<footer>
-				<center>
-					<div id="footer1"><p>Poke Center © 2016</p></div>
-					<div id="footer_2">
-						<ul>
-							<li><a href="#">Ajuda</a></li>
-							<li><a href="#">Privacidade</a></li>
-							<li><a href="#">Termos</a></li>
-						</ul>
-					</div>
-				</center>
-			</footer>
+			<%@ include file="footer.jsp" %>
 		</div>
 	</body>
 </html>

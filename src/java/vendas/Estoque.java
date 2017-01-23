@@ -5,7 +5,7 @@
  */
 package vendas;
 
-import Itens.Produto;
+import Itens.*;
 import dbAccess.Access;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,14 +21,21 @@ import java.util.logging.Logger;
 public final class Estoque {
     private List<Integer> estoqueQuantidade;
     private List<Produto> estoqueProduto;
-    
-    public void AtualizaEstoque() throws SQLException, IllegalAccessException, InstantiationException{
+    private List<Pokemon> estoquePokemon;
+    public void AtualizaEstoque(int id) throws SQLException, IllegalAccessException, InstantiationException{
         this.estoqueQuantidade = new ArrayList<Integer>();
-        this.estoqueProduto = new ArrayList<Produto>();
+        if(id==0)
+            this.estoqueProduto = new ArrayList<Produto>();
+        else 
+            this.estoquePokemon = new ArrayList<Pokemon>();
         String Resultado="";
         ResultSet rs = null;
         Access db = new Access();
-        String query = "SELECT * FROM produto";
+        String query = "";
+        if(id==0)
+            query="SELECT * FROM produto";
+        else
+            query="SELECT * FROM pokemon where id ="+id;
         rs = db.selectSQL(query);
         while(rs != null && rs.next()){
             int ID = Integer.parseInt(rs.getString("ID"));
@@ -36,11 +43,18 @@ public final class Estoque {
             float preco = Float.parseFloat(rs.getString("preco"));
             String descricao = rs.getString("descricao");
             String ImgPath = rs.getString("galeria_id");
-            Produto produt = new Produto(ID,nome,descricao,ImgPath,preco);
-            estoqueProduto.add(produt);
+            if(id==0){
+                Produto produt = new Produto(ID,nome,descricao,ImgPath,preco);
+                estoqueProduto.add(produt);
+            }else{
+                String tipo = rs.getString("descricao");
+                int nivel = Integer.parseInt(rs.getString("galeria_id"));
+                Pokemon poke = new Pokemon(ID,nome,descricao,ImgPath,tipo,nivel,id);
+                estoquePokemon.add(poke);
+            }
         }
 
-        for(Produto produto : estoqueProduto){
+        for(Item produto : estoqueProduto){
             query = "SELECT * FROM galeria where id="+produto.getImgPath();
             rs = db.selectSQL(query);
             if(rs.next()){
@@ -49,19 +63,34 @@ public final class Estoque {
                 produto.setImgPath("default.png");
             }
         }
-        
-        for(Produto produto : estoqueProduto){
-            query = "SELECT quantidade as q FROM estoque_produto where produto_id="+produto.getID();
-            rs = db.selectSQL(query);
-            System.out.println(rs.getString("q"));
-            estoqueQuantidade.add(Integer.parseInt(rs.getString("q")));
-            
+        if(id==0){
+            for(Item produto : estoqueProduto){
+                query = "SELECT quantidade as q FROM estoque_produto where produto_id="+produto.getID();
+                rs = db.selectSQL(query);
+                System.out.println(rs.getString("q"));
+                estoqueQuantidade.add(Integer.parseInt(rs.getString("q")));
+            }
+        }else{
+            for(Item produto : estoqueProduto){
+                /*query = "SELECT quantidade as q FROM estoque_produto where produto_id="+produto.getID();
+                rs = db.selectSQL(query);
+                System.out.println(rs.getString("q"));*/
+                estoqueQuantidade.add(1);
+            }
         }
+        
         db.connectionClose();
+    }
+    public Estoque(int id){
+        try{
+            AtualizaEstoque(id);
+        } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(Estoque.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public Estoque(){
         try{
-            AtualizaEstoque();
+            AtualizaEstoque(0);
         } catch (SQLException | IllegalAccessException | InstantiationException ex) {
                 Logger.getLogger(Estoque.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,5 +104,8 @@ public final class Estoque {
     //retorna a única instância do Estoque
     public List<Produto> getProdutos(){
         return this.estoqueProduto;
+    }
+    public List<Pokemon> getPokemons(){
+        return this.estoquePokemon;
     }
 }

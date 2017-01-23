@@ -21,7 +21,7 @@
                         String query = "SELECT v.ID,v.data_de_venda,u.nome from venda as v,usuario as u where v.treinador_id=u.ID;";
                         rs = db.selectSQL(query);
                         ArrayList <ArrayList> vendas = new ArrayList();
-                        
+                        System.out.print("Passou tag 0");
                         while(rs.next()){
                             ArrayList venda = new ArrayList();
                             venda.add(Integer.parseInt(rs.getString("ID")));
@@ -31,6 +31,7 @@
                         }
                         query = "SELECT p.nome,v.quantidade,p.preco from venda_item as v,produto as p where v.venda_id=1 AND v.produto_id=p.ID;";
                         rs = db.selectSQL(query);
+                        System.out.print("Passou tag 1");
                         %>
 			<div style="clear:both;"></div>
 
@@ -45,6 +46,7 @@
                                         <%
                                         int counter = 0;
                                         float total;
+                                        System.out.print("Passou tag 2");
                                         for(ArrayList venda : vendas){
                                             total=0;
                                             if(counter == 0){
@@ -81,6 +83,7 @@
                                                counter = 0;
                                                 out.println("</div>");
                                                 out.println("<div style=\"clear: both;\"></div>");
+                                                System.out.print("Passou tag 4");
                                             }else{
                                                 counter++;
                                             }
