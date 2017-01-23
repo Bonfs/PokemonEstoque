@@ -162,7 +162,7 @@
 							<input type="password" name="senha" value=""><br><br>
                                                         <%}
                                                         if(Perfil.isTratador() && (((Tratador) User).isGerente())){
-                                                            out.print("<input type=\"checkbox\" name=\"gerente\" checked=\""+((Tratador) Perfil).isGerente()+"\">  Cadastrar como Gerente <br><br><br>");
+                                                            out.print("<input type=\"checkbox\" name=\"gerente\""+((((Tratador) Perfil).isGerente())?"checked":"")+"\">  Cadastrar como Gerente <br><br><br>");
                                                         }
                                                         %>
                                                         <input value="<%out.print((Existia)?"ALTERAR":"CADASTRO");%>" class="botao" onclick="Submit()" >
