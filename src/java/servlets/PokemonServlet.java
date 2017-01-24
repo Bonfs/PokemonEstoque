@@ -69,7 +69,8 @@ public class PokemonServlet extends HttpServlet {
         String nivel = request.getParameter("nivel");
         String tipo = request.getParameter("tipo");
         String descricao = request.getParameter("descricao");
-        String query ="UPDATE `pokemon` SET nome=\""+nome+"\",tipo=\""+tipo+"\",nivel="+nivel+",descricao=\""+descricao+"\" WHERE ID="+id+";";
+        int dispTroca = Integer.parseInt(request.getParameter("dispTroca"));
+        String query ="UPDATE `pokemon` SET nome=\""+nome+"\",tipo=\""+tipo+"\",nivel="+nivel+",descricao=\""+descricao+"\",dispTroca="+dispTroca+" WHERE ID="+id+";";
         System.out.println("Antes de Entrar :"+query);
         try {
             db.insertSQL(query);
@@ -84,7 +85,8 @@ public class PokemonServlet extends HttpServlet {
         String nivel = request.getParameter("nivel");
         String tipo = request.getParameter("tipo");
         String descricao = request.getParameter("descricao");
-        String query = "INSERT INTO `pokemon` (nome,tipo,nivel,descricao,Id_Treinador) VALUES(\""+nome+"\",\""+tipo+"\","+nivel+",\""+descricao+"\","+User.getID()+");";
+        int dispTroca = Integer.parseInt(request.getParameter("dispTroca"));
+        String query = "INSERT INTO `pokemon` (nome,tipo,nivel,descricao,Id_Treinador,dispTroca) VALUES(\""+nome+"\",\""+tipo+"\","+nivel+",\""+descricao+"\","+User.getID()+","+dispTroca+");";
         System.out.println("Antes de Entrar :"+query);
         try {
             db.insertSQL(query);

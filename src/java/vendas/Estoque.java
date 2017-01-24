@@ -51,7 +51,11 @@ public final class Estoque {
             }else{
                 String tipo = rs.getString("tipo");
                 int nivel = Integer.parseInt(rs.getString("nivel"));
-                Pokemon poke = new Pokemon(ID,nome,descricao,ImgPath,tipo,nivel,id);
+                int dispTroca =0;
+                if(rs.getString("dispTroca") != null){
+                dispTroca = Integer.parseInt(rs.getString("dispTroca"));
+                }
+                Pokemon poke = new Pokemon(ID,nome,descricao,ImgPath,tipo,nivel,id,dispTroca);
                 estoquePokemon.add(poke);
             }
         }
