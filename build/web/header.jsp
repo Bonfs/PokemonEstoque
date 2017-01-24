@@ -26,13 +26,13 @@
                     <ul>    
                             <%if(User == null || !User.isTratador()){
                                 if(Loja){%>
-                            <li><a href="#">Sobre Nós</a></li>
-                            <li><a href="#">Central de Ajuda</a></li>
-                            <li><a href="#">Fale Conosco</a></li>
+                            <li><a href="SobreNos.jsp">Sobre Nós</a></li>
+                            <li><a href="CentraldeAjuda.jsp">Central de Ajuda</a></li>
+                            <li><a href="FaleConosco.jsp">Fale Conosco</a></li>
                             <%  }else{%>
                             <li><a href="cadastro_pokemon.jsp"> Cadastrar Pokemon </a></li>
                             <li><a href="PokeCenter_Treinador_Pokemons.jsp"> Seus Pokemons </a></li>
-                            <li><a href="#">Doação</a></li>
+                            <li><a href="Doacao.jsp">Doação</a></li>
                             <%  }
                             }else if(User != null && User.isTratador()){
                                 if(((Tratador) User).isGerente()){%>

@@ -142,7 +142,7 @@ public class PokemonServlet extends HttpServlet {
                 response.sendRedirect("PokeCenter_Treinador_Pokemons.jsp");
             }else if(request.getParameter("acao").equals("TrocaPoke")){
                 TrocaPoke(request,response,User);
-                response.sendRedirect("Home.jsp");
+                response.sendRedirect("home.jsp");
             }
             
             
