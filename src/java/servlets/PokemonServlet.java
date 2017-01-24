@@ -94,6 +94,36 @@ public class PokemonServlet extends HttpServlet {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    private void TrocaPoke(HttpServletRequest request, HttpServletResponse response,Usuario User){
+        System.out.print("Create Poke Data");
+        Access db = new Access();
+        String Trei1 = request.getParameter("Trei1");
+        String Trei2 = request.getParameter("Trei2");
+        String poke01 = request.getParameter("poke01");
+        String poke02 = request.getParameter("poke02");
+        //UPDATE pokemon SET Id_Treinador=4 WHERE ID=1;
+        String query ="UPDATE pokemon SET Id_Treinador="+Trei2+" WHERE ID="+poke01+";";
+        System.out.println("Antes de Entrar :"+query);
+        try {
+            db.insertSQL(query);
+        } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        query ="UPDATE pokemon SET Id_Treinador="+Trei1+" WHERE ID="+poke02+";";
+        System.out.println("Antes de Entrar :"+query);
+        try {
+            db.insertSQL(query);
+        } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        query ="INSERT INTO `troca_pokemon`(`treinador_id1`,`treinador_id2`,`pokemon_id1`,`pokemon_id2`) VALUES ("+Trei1+","+Trei2+","+poke01+","+poke02+");";
+        System.out.println("Antes de Entrar :"+query);
+        try {
+            db.insertSQL(query);
+        } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -104,11 +134,18 @@ public class PokemonServlet extends HttpServlet {
             User = (Usuario) sessao.getAttribute("User");
             if(request.getParameter("acao").equals("AlterPoke")){
                 AlterPoke(request,response);
+                ((Treinador) User).atualizaBolsa();
+                response.sendRedirect("PokeCenter_Treinador_Pokemons.jsp");
             }else if(request.getParameter("acao").equals("CriaPoke")){
                 CriaPoke(request,response,User);
+                ((Treinador) User).atualizaBolsa();
+                response.sendRedirect("PokeCenter_Treinador_Pokemons.jsp");
+            }else if(request.getParameter("acao").equals("TrocaPoke")){
+                TrocaPoke(request,response,User);
+                response.sendRedirect("Home.jsp");
             }
-            ((Treinador) User).atualizaBolsa();
-            response.sendRedirect("PokeCenter_Treinador_Pokemons.jsp");
+            
+            
         }else{
             response.sendRedirect("home.jsp");
         }
