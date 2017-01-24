@@ -11,13 +11,17 @@ package Itens;
  * @author matheus
  */
 public class Pokemon extends Item{
-    private int id_treinador,nivel;
+    private int id_treinador,nivel,dispTroca;
     private String tipo;
-    public Pokemon(int ID,String nome,String description,String imgPath,String tipo,int nivel,int id_Treinador){
+    public Pokemon(int ID,String nome,String description,String imgPath,String tipo,int nivel,int id_Treinador,int dispTroca){
         super(ID,description,nome,imgPath);
         this.id_treinador = id_Treinador;
         this.tipo = tipo;
         this.nivel = nivel;
+        this.dispTroca = dispTroca;
+    }
+    public int getdispTroca(){
+        return dispTroca;
     }
     public String getTipo() {
         return tipo;

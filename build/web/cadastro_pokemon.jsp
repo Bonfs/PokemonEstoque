@@ -22,7 +22,7 @@
         if(id_poke >= 0){
             poke = ((Treinador) User).getPokemon(id_poke);
         }else{
-            poke = new Pokemon(-1,"","","","Normal",0,User.getID());
+            poke = new Pokemon(-1,"","","","Normal",0,User.getID(),0);
         }  
         %>
         <script>
@@ -31,7 +31,8 @@
                 var nivel = document.getElementsByName("nivel")[0].value;
                 var tipo = document.getElementsByName("tipo")[0].value;
                 var descricao = document.getElementsByName("descricao")[0].value;
-                post("PokemonServlet",{acao:((<%=poke.getID()%>==-1)?"CriaPoke":"AlterPoke"),nome:nome,nivel:nivel,tipo:tipo,descricao:descricao<%if(poke.getID()>-1)out.print(",ID:"+poke.getID());%>});
+                var dispTroca = (document.getElementsByName("dispTroca")[0].checked)?1:0;
+                post("PokemonServlet",{acao:((<%=poke.getID()%>==-1)?"CriaPoke":"AlterPoke"),nome:nome,nivel:nivel,dispTroca:dispTroca,tipo:tipo,descricao:descricao<%if(poke.getID()>-1)out.print(",ID:"+poke.getID());%>});
             };
         </script>
     </head>
@@ -74,6 +75,7 @@
                     <div id="coluna_cad2">
                         <div class="legenda">DESCRIÇÂO:</div>
                         <input type="text" name="descricao"><br><br>
+                        <input type="checkbox" <%out.print((poke.getdispTroca()==1)?"checked":"");%> name="dispTroca"> Disponivel para troca.<br><br><br>
                         <input value="<%out.print((poke.getID()!=-1)?"ALTERAR":"CADASTRAR");%>" class="botao" onclick="Submit()">
                         </form>
                     </div>
@@ -89,6 +91,7 @@
                     document.getElementsByName("nivel")[0].value = "<%=poke.getNivel()%>";
                     document.getElementsByName("tipo")[0].value = "<%=poke.getTipo()%>";
                     document.getElementsByName("descricao")[0].value = "<%=poke.getDescricao()%>";
+                    document.getElementsByName("dispTroca")[0].value = "<%=poke.getdispTroca()%>";
                 }
             </script>
         </div>
