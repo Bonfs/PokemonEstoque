@@ -33,14 +33,14 @@
                                         <%
                                         int counter = 0;
                                         for(Produto produto : estoque.getProdutos()){ 
-                                            if(estoque.getQuantidade(counter)>=0){
+                                            if(estoque.getQuantidade_Produto(counter)>=0){
                                         %>
 					<div class="produto_estoque">
 						<ul>
 							<li> <div class="produto_estoque_img"> <img src="img/<%=produto.getImgPath()%> "> </div> </li>
 							<li> <%=produto.getNome()%> </li>
 							<li>R$ <%=produto.getPrecoString()%> </li>
-							<li> <%=estoque.getQuantidade(counter)%> </li>
+							<li> <%=estoque.getQuantidade_Produto(counter)%> </li>
 						</ul>
 					</div>
                                         <%

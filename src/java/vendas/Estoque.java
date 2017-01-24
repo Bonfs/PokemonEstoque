@@ -80,8 +80,12 @@ public final class Estoque {
             for(Item produto : estoqueProduto){
                 query = "SELECT quantidade as q FROM estoque_produto where produto_id="+produto.getID();
                 rs = db.selectSQL(query);
-                System.out.println(rs.getString("q"));
-                estoqueQuantidade.add(Integer.parseInt(rs.getString("q")));
+                //System.out.print(rs.getString("q"));
+                if(rs != null && !rs.isClosed()){
+                    estoqueQuantidade.add(Integer.parseInt(rs.getString("q")));
+                }else{
+                    estoqueQuantidade.add(0);
+                }
             }
         }else{
             for(Item produto : estoquePokemon){
@@ -108,8 +112,8 @@ public final class Estoque {
                 Logger.getLogger(Estoque.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public int getQuantidade(int index){
-        return this.estoqueQuantidade.get(index);
+    public int getQuantidade_Produto(int i){
+        return this.estoqueQuantidade.get(i);
     }
     public List<Integer> getQuantidades(){
         return this.estoqueQuantidade;

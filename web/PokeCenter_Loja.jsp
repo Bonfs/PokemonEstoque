@@ -41,7 +41,7 @@
                                         <% 
                                             int counter =0;
                                             for(Produto produto : estoque.getProdutos()){ 
-                                            if(estoque.getQuantidade(counter) > 0){
+                                            if(estoque.getQuantidade_Produto(counter) > 0){
                                         %>
 					<div id="Produto_<%=produto.getID()%>" class="produto">
 						<div> <a href="PokeCenter_Loja_Produto.jsp?ID=<%=produto.getID()%>"><img src="img/<%=produto.getImgPath()%>"></a> </div>
