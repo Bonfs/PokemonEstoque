@@ -114,9 +114,9 @@
                         }else{
                             out.println("var login=document.getElementsByName(\"login\")[0].value;var senha=document.getElementsByName(\"senha\")[0].value;");
                             if(Alter==-1)
-                               out.println("post(\"LoginServlet\",{acao:\'CriaUser\',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].checked},\"post\");");
+                               out.println("post(\"LoginServlet\",{acao:\'CriaUser\',CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,gerente:document.getElementsByName(\"gerente\")[0].checked},\"post\");");
                             else
-                               out.println("post(\"LoginServlet\",{acao:\'CriaUser\',ID:ID,CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName(\"nome_mae\")[0].value},\"post\");");
+                               out.println("post(\"LoginServlet\",{acao:\'CriaUser\',CPF:CPF,login:login,senha:senha,nome:nome,email:email,cidade:cidade,endereco:endereco,telefone:telefone,nome_mae:document.getElementsByName(\"nome_mae\")[0].value},\"post\");");
                         }%>
                     }
                     
@@ -172,18 +172,8 @@
 
 			</div>
 			<div style="clear:both;"></div>
-			<footer>
-				<center>
-					<div id="footer1"><p>Poke Center © 2016</p></div>
-					<div id="footer2">
-						<ul>
-							<li><a href="#">Ajuda</a></li>
-							<li><a href="#">Privacidade</a></li>
-							<li><a href="#">Termos</a></li>
-						</ul>
-					</div>
-				</center>
-			</footer>
+                        
+			<%@ include file="footer.jsp" %>
 		</div>
 	</body>
 </html>

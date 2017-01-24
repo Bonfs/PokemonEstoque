@@ -7,21 +7,33 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
         <title>Cadastro Pokemon</title>
-        
+        <script src="js/PostMethod.js"></script>
         <%
-        int id_poke = 0;
+        int id_poke = -1;
         Usuario User = null;
         if(session.getAttribute("User") != null) {
             User = (Usuario) session.getAttribute("User");
         }
         if(request.getParameter("AlterPoke") != null){
             id_poke = Integer.parseInt(request.getParameter("AlterPoke"));
+            session.setAttribute("AlterPoke", null);
         }
         Pokemon poke;
-        if(id_poke != 0){
+        if(id_poke >= 0){
             poke = ((Treinador) User).getPokemon(id_poke);
+        }else{
+            poke = new Pokemon(-1,"","","","Normal",0,User.getID());
         }  
         %>
+        <script>
+            function Submit(){
+                var nome = document.getElementsByName("nome")[0].value;
+                var nivel = document.getElementsByName("nivel")[0].value;
+                var tipo = document.getElementsByName("tipo")[0].value;
+                var descricao = document.getElementsByName("descricao")[0].value;
+                post("PokemonServlet",{acao:((<%=poke.getID()%>==-1)?"CriaPoke":"AlterPoke"),nome:nome,nivel:nivel,tipo:tipo,descricao:descricao<%if(poke.getID()>-1)out.print(",ID:"+poke.getID());%>});
+            };
+        </script>
     </head>
     <body>
         <div id="container1">			
@@ -60,27 +72,25 @@
                             </select>
                     </div>
                     <div id="coluna_cad2">
-                        <div class="legenda">DESCRIÃ‡ÃƒO:</div>
+                        <div class="legenda">DESCRIÇÂO:</div>
                         <input type="text" name="descricao"><br><br>
-                        <input type="submit" value="CADASTRAR" class="botao">
+                        <input value="<%out.print((poke.getID()!=-1)?"ALTERAR":"CADASTRAR");%>" class="botao" onclick="Submit()">
                         </form>
                     </div>
                 </div>
 
             </div>
             <div style="clear:both;"></div>
-            <footer>
-                <center>
-                    <div id="footer1"><p>Poke Center Â© 2016</p></div>
-                    <div id="footer2">
-                        <ul>
-                            <li><a href="#">Ajuda</a></li>
-                            <li><a href="#">Privacidade</a></li>
-                            <li><a href="#">Termos</a></li>
-                        </ul>
-                    </div>
-                </center>
-            </footer>
+            
+            <%@ include file="footer.jsp" %>
+            <script>
+                if(<%=poke.getID()%>!=-1){
+                    document.getElementsByName("nome")[0].value = "<%=poke.getNome()%>";
+                    document.getElementsByName("nivel")[0].value = "<%=poke.getNivel()%>";
+                    document.getElementsByName("tipo")[0].value = "<%=poke.getTipo()%>";
+                    document.getElementsByName("descricao")[0].value = "<%=poke.getDescricao()%>";
+                }
+            </script>
         </div>
     </body>
 </html>

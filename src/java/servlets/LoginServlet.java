@@ -84,6 +84,29 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession sessao = request.getSession();
+        Usuario User =(Usuario) sessao.getAttribute("User");
+        
+        if(request.getParameter("acao").equals("ENTRAR")) {
+            String login = request.getParameter("login");
+            String pswd = request.getParameter("senha");
+            if(Login(login,pswd,request,response)){
+                response.sendRedirect("PokeCenter_Perfil.jsp");
+            }else{
+                response.sendRedirect("home.jsp");
+            }
+        }else if(request.getParameter("acao").equals("UpdateUser")){
+            UpdateUser(request,response,User);
+        }else if(request.getParameter("acao").equals("CriaUser")){
+            CriaUser(request,response);
+        }else if(request.getParameter("acao").equals("Deslogar")){
+            sessao.invalidate();
+            response.sendRedirect("home.jsp");
+        }
+    }
+    
     private boolean Login(String login,String pswd, HttpServletRequest request, HttpServletResponse response) throws IOException{
         boolean isLogged = false,tipo=false;
         ResultSet rs;
@@ -133,69 +156,7 @@ public class LoginServlet extends HttpServlet {
         }
         return true;
     }
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession sessao = request.getSession();
-        Usuario User =(Usuario) sessao.getAttribute("User");
-        
-        if(request.getParameter("acao").equals("ENTRAR")) {
-            String login = request.getParameter("login");
-            String pswd = request.getParameter("senha");
-            if(Login(login,pswd,request,response)){
-                response.sendRedirect("PokeCenter_Perfil.jsp");
-            }else{
-                response.sendRedirect("home.jsp");
-            }
-        }else if(request.getParameter("acao").equals("UpdateUser")){
-            System.out.print("Update User Data");
-            ResultSet rs;
-            Access db = new Access();
-            int ID=Integer.parseInt(request.getParameter("ID"));
-            String CPF=request.getParameter("CPF");
-            String login=request.getParameter("login");
-            String senha=request.getParameter("senha");
-            String nome=request.getParameter("nome");
-            String email=request.getParameter("email");
-            String cidade=request.getParameter("cidade");
-            String endereco=request.getParameter("endereco");
-            String telefone=request.getParameter("telefone");
-            String query ="UPDATE `usuario` SET `CPF`=\'"+CPF+"\',`nome`=\'"+nome+"\',`email`=\'"+email+"\',`cidade`=\'"+cidade+"\',`endereco`=\'"+endereco+"\',`telefone`=\'"+telefone+"\' WHERE `ID`="+ID+";";
-            System.out.println("Antes de Entrar"+query);
-            try {
-                db.insertSQL(query);
-                ////while(!db.isReady()){System.out.println(db.isReady());}
-                //System.out.println(db.isReady());
-            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
-                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if(request.getParameter("nome_mae") != null){
-                String nome_mae=request.getParameter("nome_mae");
-                query ="UPDATE `treinador` SET `nome_da_mae`=\'"+nome_mae+"\' WHERE `treinador_id`="+ID+";";
-            }else{
-                int gerente=(request.getParameter("gerente").equals("true"))?1:0;
-                System.out.print(ID+":"+request.getParameter("gerente")+gerente);
-                query ="UPDATE `tratador` SET `tipo`="+gerente+" WHERE `tratador_id`="+ID+";";
-                System.out.print(ID+":"+request.getParameter("gerente")+gerente);
-            }
-            try {
-                db.insertSQL(query);
-            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
-                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            /*HttpSession sessao = request.getSession();
-            sessao.invalidate();*/
-            db.connectionClose();
-            if(User != null){
-                login = User.getLogin();
-                senha = User.getPswd();
-            }
-            if(Login(login,senha,request,response)){
-                response.sendRedirect("PokeCenter_Perfil.jsp");
-            }else{
-                response.sendRedirect("home.jsp");
-            }
-        }else if(request.getParameter("acao").equals("CriaUser")){
-            //Create
+    private void CriaUser(HttpServletRequest request, HttpServletResponse response) {
             ResultSet rs = null;
             Access db = new Access();
             String CPF=request.getParameter("CPF");
@@ -237,18 +198,65 @@ public class LoginServlet extends HttpServlet {
                 Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             db.connectionClose();
-            
+        try {
             response.sendRedirect("home.jsp");
+        } catch (IOException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    private void UpdateUser(HttpServletRequest request, HttpServletResponse response,Usuario User){
+            System.out.print("Update User Data");
+            ResultSet rs;
+            Access db = new Access();
+            int ID=Integer.parseInt(request.getParameter("ID"));
+            String CPF=request.getParameter("CPF");
+            String login=request.getParameter("login");
+            String senha=request.getParameter("senha");
+            String nome=request.getParameter("nome");
+            String email=request.getParameter("email");
+            String cidade=request.getParameter("cidade");
+            String endereco=request.getParameter("endereco");
+            String telefone=request.getParameter("telefone");
+            String query ="UPDATE `usuario` SET `CPF`=\'"+CPF+"\',`nome`=\'"+nome+"\',`email`=\'"+email+"\',`cidade`=\'"+cidade+"\',`endereco`=\'"+endereco+"\',`telefone`=\'"+telefone+"\' WHERE `ID`="+ID+";";
+            System.out.println("Antes de Entrar"+query);
+            try {
+                db.insertSQL(query);
+            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if(request.getParameter("nome_mae") != null){
+                String nome_mae=request.getParameter("nome_mae");
+                query ="UPDATE `treinador` SET `nome_da_mae`=\'"+nome_mae+"\' WHERE `treinador_id`="+ID+";";
+            }else{
+                int gerente=(request.getParameter("gerente").equals("true"))?1:0;
+                System.out.print(ID+":"+request.getParameter("gerente")+gerente);
+                query ="UPDATE `tratador` SET `tipo`="+gerente+" WHERE `tratador_id`="+ID+";";
+                System.out.print(ID+":"+request.getParameter("gerente")+gerente);
+            }
+            try {
+                db.insertSQL(query);
+            } catch (SQLException | IllegalAccessException | InstantiationException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            /*HttpSession sessao = request.getSession();
+            sessao.invalidate();*/
+            db.connectionClose();
+            if(User != null){
+                login = User.getLogin();
+                senha = User.getPswd();
+            }
+            try{
+                if(Login(login,senha,request,response)){
+                    response.sendRedirect("PokeCenter_Perfil.jsp");
+                }else{
+                    response.sendRedirect("home.jsp");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    
     @Override
     public String getServletInfo() {
         return "Short description";
