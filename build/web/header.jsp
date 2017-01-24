@@ -38,7 +38,9 @@
                                 if(((Tratador) User).isGerente()){%>
                                     <li><a href="#" onclick="Cadastrar_Tratador()"> Cadastrar Tratador </a></li>
                                     <li><a href="PokeCenter_Tratador_Lista.jsp"> Tratadores </a></li>
+                                <%}%>
                                     <li><a href="PokeCenter_Tratador_Estoque.jsp">Estoque</a></li>
+                                <%if(((Tratador) User).isGerente()){%>
                                     <li><a href="PokeCenter_Tratador_Vendas.jsp">Vendas</a></li>
                                 <%}%>
                                 <li><a href="#">Troca</a></li>

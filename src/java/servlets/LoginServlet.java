@@ -142,12 +142,7 @@ public class LoginServlet extends HttpServlet {
             String login = request.getParameter("login");
             String pswd = request.getParameter("senha");
             if(Login(login,pswd,request,response)){
-                User =(Usuario) sessao.getAttribute("User");
-                if(User.isTratador()){
-                    response.sendRedirect("PokeCenter_Perfil.jsp");
-                }else{
-                    response.sendRedirect("PokeCenter_Loja.jsp");
-                }
+                response.sendRedirect("PokeCenter_Perfil.jsp");
             }else{
                 response.sendRedirect("home.jsp");
             }

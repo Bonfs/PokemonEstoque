@@ -13,7 +13,7 @@ package Itens;
 public class Pokemon extends Item{
     private int id_treinador,nivel;
     private String tipo;
-    public Pokemon(int ID,String description,String nome,String imgPath,String tipo,int nivel,int id_Treinador){
+    public Pokemon(int ID,String nome,String description,String imgPath,String tipo,int nivel,int id_Treinador){
         super(ID,description,nome,imgPath);
         this.id_treinador = id_Treinador;
         this.tipo = tipo;

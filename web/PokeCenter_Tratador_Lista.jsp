@@ -1,3 +1,4 @@
+<%@page import="treinadoresEtratadores.Usuario"%>
 <%@page import="dbAccess.Access"%>
 <%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
@@ -31,6 +32,10 @@
 				<div id="produtoDescri">
 					<h2>Lista de Tratadores</h2>
                                         <%
+                                        Usuario User = null;
+                                        if(session.getAttribute("User") != null) {
+                                            User = (Usuario) session.getAttribute("User");
+                                        }
                                         Access db = new Access(); 
                                         if(request.getParameter("Exclui_Func") != null){
                                             int id = Integer.parseInt(request.getParameter("Exclui_Func"));
@@ -44,6 +49,7 @@
                                         int id;    
                                         while(rs.next()){
                                             id = Integer.parseInt(rs.getString("ID"));
+                                            if(User.getID()!=id){
                                         %>
 					<div class="tratador">
 						<ul>
@@ -53,6 +59,7 @@
 						</ul>
 					</div>
                                         <%}
+                                        }
                                         db.connectionClose();
                                         %>
 

@@ -22,6 +22,8 @@ public final class Estoque {
     private List<Integer> estoqueQuantidade;
     private List<Produto> estoqueProduto;
     private List<Pokemon> estoquePokemon;
+    
+    
     public void AtualizaEstoque(int id) throws SQLException, IllegalAccessException, InstantiationException{
         this.estoqueQuantidade = new ArrayList<Integer>();
         if(id==0)
@@ -35,33 +37,44 @@ public final class Estoque {
         if(id==0)
             query="SELECT * FROM produto";
         else
-            query="SELECT * FROM pokemon where id ="+id;
+            query="SELECT * FROM pokemon where id_Treinador ="+id;
         rs = db.selectSQL(query);
         while(rs != null && rs.next()){
             int ID = Integer.parseInt(rs.getString("ID"));
             String nome = rs.getString("nome");
-            float preco = Float.parseFloat(rs.getString("preco"));
             String descricao = rs.getString("descricao");
             String ImgPath = rs.getString("galeria_id");
             if(id==0){
+                float preco = Float.parseFloat(rs.getString("preco"));
                 Produto produt = new Produto(ID,nome,descricao,ImgPath,preco);
                 estoqueProduto.add(produt);
             }else{
-                String tipo = rs.getString("descricao");
-                int nivel = Integer.parseInt(rs.getString("galeria_id"));
+                String tipo = rs.getString("tipo");
+                int nivel = Integer.parseInt(rs.getString("nivel"));
                 Pokemon poke = new Pokemon(ID,nome,descricao,ImgPath,tipo,nivel,id);
                 estoquePokemon.add(poke);
             }
         }
-
-        for(Item produto : estoqueProduto){
-            query = "SELECT * FROM galeria where id="+produto.getImgPath();
-            rs = db.selectSQL(query);
-            if(rs.next()){
-                produto.setImgPath(rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao"));
-            } else{
-                produto.setImgPath("default.png");
+        if(id==0){
+            for(Produto produto : estoqueProduto){
+                query = "SELECT * FROM galeria where id="+produto.getImgPath();
+                rs = db.selectSQL(query);
+                if(rs.next()){
+                    produto.setImgPath(rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao"));
+                } else{
+                    produto.setImgPath("default.png");
+                }
             }
+        }else{
+             for(Pokemon produto : estoquePokemon){
+                query = "SELECT * FROM galeria where id="+produto.getImgPath();
+                rs = db.selectSQL(query);
+                if(rs.next()){
+                    produto.setImgPath(rs.getString("id")+"_"+rs.getString("id_img")+rs.getString("extensao"));
+                } else{
+                    produto.setImgPath("default.png");
+                }
+            }           
         }
         if(id==0){
             for(Item produto : estoqueProduto){
@@ -71,7 +84,7 @@ public final class Estoque {
                 estoqueQuantidade.add(Integer.parseInt(rs.getString("q")));
             }
         }else{
-            for(Item produto : estoqueProduto){
+            for(Item produto : estoquePokemon){
                 /*query = "SELECT quantidade as q FROM estoque_produto where produto_id="+produto.getID();
                 rs = db.selectSQL(query);
                 System.out.println(rs.getString("q"));*/
@@ -107,5 +120,8 @@ public final class Estoque {
     }
     public List<Pokemon> getPokemons(){
         return this.estoquePokemon;
+    }
+    public Pokemon getPokemon(int id){
+        return estoquePokemon.get(id);
     }
 }

@@ -1,3 +1,6 @@
+<%@page import="treinadoresEtratadores.Treinador"%>
+<%@page import="Itens.Pokemon"%>
+<%@page import="treinadoresEtratadores.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,7 +15,12 @@
                         <jsp:param name="Manter" value="false" />
                         <jsp:param name="Loja" value="false" />
                     </jsp:include>
-                    
+                        <%
+                            Usuario User = null;
+                            if(session.getAttribute("User") != null) {
+                                User = (Usuario) session.getAttribute("User");
+                            }
+                        %>
 
 			<div style="clear:both;"></div>
 
@@ -23,42 +31,17 @@
 				</div>
 				<div id="produtoDescri">
 					<h2>Meus Pokemons</h2>
+                                        <%for(Pokemon poke: ((Treinador) User).getPokemons()){%>
 					<div class="pokemon">
 						<ul>
-							<li><a href="PokeCenter_Pokemon.html">Nome Pokemon</a></li>
-							<li>Nivel 00</li>
-							<li>Tipo Pokemon</li>
+							<li><a href="PokeCenter_Pokemon.html"><%=poke.getNome()%></a></li>
+							<li><%=poke.getNivel()%></li>
+							<li><%=poke.getTipo()%></li>
 							<li><a href="#"> <div class="icon"><img src="img/editar.png"></div> Alterar </a></li>
 							<li><a href="#"> <div class="icon"><img src="img/lixeira.png"></div> Remover </a></li>
 						</ul>
 					</div>
-					<div class="pokemon">
-						<ul>
-							<li><a href="PokeCenter_Pokemon.html">Nome Pokemon</a></li>
-							<li>Nivel 00</li>
-							<li>Tipo Pokemon</li>
-							<li><a href="#"> <div class="icon"><img src="img/editar.png"></div> Alterar </a></li>
-							<li><a href="#"> <div class="icon"><img src="img/lixeira.png"></div> Remover </a></li>
-						</ul>
-					</div>
-					<div class="pokemon">
-						<ul>
-							<li><a href="PokeCenter_Pokemon.html">Nome Pokemon</a></li>
-							<li>Nivel 00</li>
-							<li>Tipo Pokemon</li>
-							<li><a href="#"> <div class="icon"><img src="img/editar.png"></div> Alterar </a></li>
-							<li><a href="#"> <div class="icon"><img src="img/lixeira.png"></div> Remover </a></li>
-						</ul>
-					</div>
-					<div class="pokemon">
-						<ul>
-							<li><a href="PokeCenter_Pokemon.html">Nome Pokemon</a></li>
-							<li>Nivel 00</li>
-							<li>Tipo Pokemon</li>
-							<li><a href="#"> <div class="icon"><img src="img/editar.png"></div> Alterar </a></li>
-							<li><a href="#"> <div class="icon"><img src="img/lixeira.png"></div> Remover </a></li>
-						</ul>
-					</div>
+                                        <%}%>
 				</div>
 			</div>
 
