@@ -43,7 +43,7 @@
                                 <%if(((Tratador) User).isGerente()){%>
                                     <li><a href="PokeCenter_Tratador_Vendas.jsp">Vendas</a></li>
                                 <%}%>
-                                <li><a href="#">Troca</a></li>
+                                <li><a href="PokeCenter_Tratador_Troca.jsp">Troca</a></li>
                             <%}%>
                             
                             
