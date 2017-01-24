@@ -95,6 +95,10 @@
                         CPF=VerificaCPF(CPF);
                         if(CPF==false){
                             console.log("CPF invalido");
+                            var cpf=document.getElementsByName("cpf")[0];
+                            cpf.style.boxShadow = "0px 0px 20px red";
+                            //cpf.style.border = "1px solid red";
+                            cpf.value = "Informe um CPF válido";
                             return false;
                         }
                         var nome=document.getElementsByName("nome")[0].value;
