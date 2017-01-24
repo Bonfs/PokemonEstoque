@@ -44,17 +44,22 @@
                         }
                         
                         List<List> Pokemons = new ArrayList<List>();
+                        int counter = 0;
                         for(List<List> treinador : Treinadores){
-                            query = "SELECT ID,NOME from pokemon where dispTroca=1 and Id_Treinador="+treinador.get(0);
-                            rs = db.selectSQL(query);
                             List<List> Pokemon = new ArrayList<List>();
-                            while(!rs.isClosed() && rs.next()){
-                                List<String> l = new ArrayList<String>();
-                                l.add(rs.getString("ID"));
-                                l.add(rs.getString("NOME"));
-                                Pokemon.add(l);
+                            if(counter==Trei1 || counter==Trei2){
+                                query = "SELECT ID,NOME from pokemon where dispTroca=1 and Id_Treinador="+treinador.get(0);
+                                rs = db.selectSQL(query);
+
+                                while(!rs.isClosed() && rs.next()){
+                                    List<String> l = new ArrayList<String>();
+                                    l.add(rs.getString("ID"));
+                                    l.add(rs.getString("NOME"));
+                                    Pokemon.add(l);
+                                }
                             }
                             Pokemons.add(Pokemon);
+                            counter++;
                         }
                         %>
 			<div style="clear:both;"></div>
@@ -77,8 +82,9 @@
 						<div class="col-troca01">
 							Selecione 1º treinador: 							
 							<select name="treinador01">
-                                <%  int counter=0;
-                                    for(List<String> treinador : Treinadores){%>                            
+                                <%  counter=0;
+                                    for(List<String> treinador : Treinadores){
+                                %>                            
                                 <option onclick="TreinadorSelected()" value="<%=counter%>" <%if(counter == Trei1)out.print("selected");%>><%=treinador.get(1)%></option>
                                 <%counter++;}%>
                             </select>
